@@ -6,6 +6,7 @@ dotenv.config()
 
 const db = require('./configs/db')
 const initializePassport = require('./configs/passport')
+const globalErrorMiddleware = require('./middlewares/globalError')
 
 // Routes
 
@@ -29,7 +30,6 @@ app.use(express.json())
 app.use(express.static(`${__dirname}/uploads`))
 
 
-
 // Routes
 
 app.use('/api/v1/auth',authRoutes)
@@ -37,6 +37,7 @@ app.use('/api/v1/auth',authRoutes)
 
 
 
+app.use(globalErrorMiddleware)
 
 
 // Server Start

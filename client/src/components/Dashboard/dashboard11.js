@@ -17,18 +17,7 @@ const Dashboard11 = () => {
                 <div className="block-header">
                     <div className="row clearfix">
                         <div className="col-md-6 col-sm-12">
-                            <h1>eCommerce Analytics</h1>
-                            <nav aria-label="breadcrumb">
-                                <ol className="breadcrumb">
-                                    <li className="breadcrumb-item"><Link to="/">Oculux</Link></li>
-                                    <li className="breadcrumb-item"><Link to="/">My page</Link></li>
-                                    <li className="breadcrumb-item active" aria-current="page">eCommerce Analytics</li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <div className="col-md-6 col-sm-12 text-right hidden-xs">
-                            <span className="btn btn-sm btn-primary mr-1" title="">Create Campaign</span>
-                            <Link to="https://themeforest.net/item/oculux-bootstrap-4x-admin-dashboard-clean-modern-ui-kit/23091507" className="btn btn-sm btn-success" title="Themeforest"><i className="icon-basket"></i> Buy Now</Link>
+                            <h1>Dashboard</h1>
                         </div>
                     </div>
                 </div>
@@ -89,27 +78,7 @@ const Dashboard11 = () => {
                 </div>
 
                 <div className="row clearfix">
-                    <div className="col-lg-3 col-md-6">
-                        <div className="card">
-                            <div className="header">
-                                <h2>Page Views(Avg)</h2>
-                            </div>
-                            <div className="body text-center">
-                                <h4>6.25</h4>
-                                <p className="mb-2"><span><i className="fa fa-caret-up text-success ml-1"></i> +1.12</span> vs last month (4.0)</p>
-                                <div id="Page_Views" style={{ height: "140px" }}>
-                                    <BarChart />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card">
-                            <div className="body">
-                                <div className="card-value float-right text-muted"><i className="icon-bubbles"></i></div>
-                                <h3 className="mb-1">2,54,021</h3>
-                                <div>Total Clicks</div>
-                            </div>
-                        </div>
-                    </div>
+           
                     <div className="col-lg-3 col-md-6">
                         <div className="card">
                             <div className="header">
@@ -133,7 +102,7 @@ const Dashboard11 = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-6 col-md-6">
+                    <div className="col-lg-9 col-md-9">
                         <div className="card">
                             <div className="header">
                                 <h2>Sales Reports</h2>
@@ -146,86 +115,7 @@ const Dashboard11 = () => {
                     </div>
                 </div>
 
-                <div className="row clearfix">
-                    <div className="col-lg-6 col-md-12">
-                        <div className="card">
-                            <div className="header">
-                                <h2>Product Valuation</h2>
-                            </div>
-                            <div className="body">
-                                <div id="chart-bar" style={{ height: "350px" }}>
-                                    <FinancialChart />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-md-6">
-                        <div className="card">
-                            <div className="header">
-                                <h2>Sales Revenue</h2>
-                            </div>
-                            <div className="body text-center">
-                                <div className="mt-4">
-                                    <Donut
-                                        className="knob"
-                                        diameter={147}
-                                        min={0}
-                                        max={100}
-                                        step={1}
-                                        value={34}
-                                        theme={{
-                                            donutThickness: 5,
-                                            donutColor: '#ffd861',
-                                            centerColor: '#282B2F',
-                                            bgrColor: '#383b40'
-                                        }}
-                                    />
-                                </div>
-                                <h3 className="mb-0 mt-3 font300">24,301 <span className="text-green font-15">+3.7%</span></h3>
-                                <small>Lorem Ipsum is simply dummy text <br /> <a href="/">Read more</a> </small>
-                                <div className="mt-4">
-                                    <span className="chart_3">
-                                        <Sparklinechart />
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-md-12">
-                        <div className="card">
-                            <div className="header">
-                                <h2>My Balance</h2>
-                            </div>
-                            <div className="body">
-                                <div className="card-value float-right text-blue">+15%</div>
-                                <h4 className="mb-0 mt-2">$5,021.00</h4>
-                            </div>
-                            <div className="card-chart-bg">
-                                <span id="linecustom">
-                                    <Sparklinecustomchart />
-                                </span>
-                            </div>
-                        </div>
-                        <div className="card">
-                            <div className="body top_counter">
-                                <div className="icon bg-success text-white"><i className="fa fa-area-chart"></i> </div>
-                                <div className="content">
-                                    <span>Growth</span>
-                                    <h5 className="number mb-0">62%</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card">
-                            <div className="body top_counter">
-                                <div className="icon bg-warning text-white"><i className="fa fa-building"></i> </div>
-                                <div className="content">
-                                    <span>Properties</span>
-                                    <h5 className="number mb-0">53,251</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
 
                 <div className="row clearfix">
                     <div className="col-12 col-sm-12">

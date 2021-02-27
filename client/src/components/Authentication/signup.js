@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
+import {useDispatch,useSelector} from 'react-redux'
 import { Link } from 'react-router-dom';
 import {Formik,useFormik} from 'formik'
 import * as Yup from 'yup'
 
+import {registerUserAsync} from '../../redux/actions/auth.actions'
+
 export default ({}) =>{
+
+	const dispatch = useDispatch()
+	const auth = useSelector(state=>state.auth)
+
+
 	const initialValues = {
 		firstName:"",
 		lastName:"",
 		email:"",
 		address:"",
-		password:""
+		password:"",
+		phoneNo:""
 	}
 
 
@@ -19,10 +28,11 @@ export default ({}) =>{
 		email:Yup.string().required().email().label("Email"),
 		password:Yup.string().required().label("Password"),
 		address:Yup.string().required().label("Address"),
+		phoneNo:Yup.string().required().label("Phone No"),
 	})
 
     const handleSignUpFormSubmit = (values)=>{
-		console.log("Form submitted",values)
+		dispatch(registerUserAsync(values))
 	}
     
 	const {values,errors,touched,handleChange,handleSubmit}  = useFormik({
@@ -52,6 +62,9 @@ export default ({}) =>{
 						<div className="card">
 							<div className="body">
 								<p className="lead">Create an account</p>
+								{auth.error.signUp && <div className="alert alert-danger mt-2" role="alert">
+									<i className="fa fa-times-circle"></i> {auth.error.signUp}
+								</div>}
 								<form className="form-auth-small m-t-20" onSubmit={handleSubmit}>
 									<div className="form-group">
 										<input type="text" className="form-control round" name="firstName" onChange={handleChange} placeholder="Your First name" value={values.firstName} />
@@ -67,7 +80,11 @@ export default ({}) =>{
 									</div>
 										<div className="form-group">
 										<input type="text" className="form-control round" name="address" onChange={handleChange} placeholder="Your Address" value={values.address} />
-										{errors.address && touched.email &&<div className="text-danger text-left mt-1 ml-2">{errors.address}</div>}									
+										{errors.address && touched.address &&<div className="text-danger text-left mt-1 ml-2">{errors.address}</div>}									
+									</div>
+									<div className="form-group">
+										<input type="text" className="form-control round" name="phoneNo" onChange={handleChange} placeholder="Your Phone No" value={values.phoneNo} />
+										{errors.phoneNo && touched.phoneNo &&<div className="text-danger text-left mt-1 ml-2">{errors.phoneNo}</div>}									
 									</div>
 									<div className="form-group">
 										<input type="password" className="form-control round" name="password" onChange={handleChange} placeholder="Password" value={values.password} />

@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import {useDispatch,useSelector} from 'react-redux'
+import { push } from "connected-react-router";
 import { Link } from 'react-router-dom';
 import {Formik,useFormik} from 'formik'
 import * as Yup from 'yup'
 
+import {loginUserAsync} from '../../redux/actions/auth.actions'
+
 export default function({}){
+
+	const dispatch = useDispatch()
+	const auth = useSelector(state => state.auth)
 
 	const initialValues = {
 		email:"",
@@ -17,7 +24,7 @@ export default function({}){
 	})
 
     const handleLoginFormSubmit = (values)=>{
-		console.log("Form submitted",values)
+		dispatch(loginUserAsync(values))
 	}
     
 	const {values,errors,touched,handleChange,handleSubmit}  = useFormik({
@@ -47,6 +54,9 @@ export default function({}){
 						<div className="card">
 							<div className="body">
 								<p className="lead">Login to your account</p>
+								{auth.error.login && <div className="alert alert-danger mt-2" role="alert">
+									<i className="fa fa-times-circle"></i> {auth.error.login}
+								</div>}
 								<form className="form-auth-small m-t-20" action="/" onSubmit={handleSubmit}>
 									<div className="form-group">
 										<input type="email" className="form-control round" name="email" onChange={handleChange} placeholder="Your Email" value={values.email} />

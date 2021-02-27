@@ -4,14 +4,14 @@ const catchAsync = require('../utils/catchAsync')
 
 
 exports.registerUser = catchAsync(async (req,res,next)=>{
-    const {firstName,lastName,email,password,address} = req.body;
+    const {firstName,lastName,email,password,address,phoneNo} = req.body;
 
     const isUserExists = await User.findOne({email});
 
-    if(isUserExists) return next(new APIError(400,"The user with same email already exists"))
+    if(isUserExists) return next(new APIError("The user with same email already exists",400))
 
     const user = await User.create({
-        firstName,lastName,email,password,address
+        firstName,lastName,email,password,address,phoneNo
     })
 
     res.status(200).json({
@@ -29,12 +29,20 @@ exports.loginUser = catchAsync(async (req,res,next)=>{
         email
     })
 
-    if (!user) return next(new APIError(400,"User does not exists"))
+    if (!user) return next(new APIError("User does not exists",400))
 
-    if(!await user.comparePassword(password)) return next(new APIError(400,"Invalid Credentials"))
+    if(!await user.comparePassword(password)) return next(new APIError("Invalid Credentials",400))
 
     res.status(200).json({
         status:"success",
         token:user.getJWTToken()
+    })
+})
+
+
+exports.getUserFromToken = catchAsync(async (req,res,next)=>{
+    res.status(200).json({
+        status:"success",
+        data:req.user
     })
 })

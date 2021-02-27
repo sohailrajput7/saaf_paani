@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Roles = require('../constants/Roles')
 
 const userSchema = new mongoose.Schema({
     email:{
@@ -24,9 +25,13 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true,"Address is required"],
     },
+    phoneNo:{
+        type:String,
+        required:[true,"Phone Number is required"]
+    },
     role:{
         type:String,
-        enum:[""]
+        enum:[Roles.User,Roles.Admin]
     }
 })
 

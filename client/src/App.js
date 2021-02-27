@@ -11,7 +11,14 @@ import NotFound from './components/Authentication/404';
 import Maintenance from './components/Authentication/maintenance';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import { getAuthUserAsync } from "./redux/actions/auth.actions";
+
 class App extends Component {
+
+	componentDidMount(){
+		this.props.getAuthUser()
+	}
+
 	render() {
 		const { themeColor, fontStyle, lightVersion, RtlVersion, offcanvas, miniSidebar, horizontalMenu, miniHover } = this.props
 		document.getElementsByTagName('body')[0].className = `${themeColor} ${fontStyle}${lightVersion ? ' light_version' : ''}${RtlVersion ? ' rtl' : ''}${offcanvas ? ' offcanvas-active' : ''}${horizontalMenu ? ' h-menu' : ''}${miniSidebar ? ' mini_sidebar' : ''}${miniHover ? ' mini_hover' : ''}`;
@@ -21,7 +28,6 @@ class App extends Component {
 					this.leftSidebar = leftSidebar;
 				}}
 			>
-				<Router>
 					<Switch>
 						<Route path="/signup" component={SignUp} />
 						<Route path="/login" component={Login} />
@@ -30,7 +36,6 @@ class App extends Component {
 						<Route path="/maintenance" component={Maintenance} />
 						<Route component={Layout} />
 					</Switch>
-				</Router>
 			</div>
 		);
 	}
@@ -47,6 +52,8 @@ const mapStateToProps = state => ({
 	miniHover: state.settings.miniHover,
 })
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+	getAuthUser:()=>dispatch(getAuthUserAsync())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
