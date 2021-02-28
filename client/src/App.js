@@ -11,12 +11,12 @@ import NotFound from './components/Authentication/404';
 import Maintenance from './components/Authentication/maintenance';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { getAuthUserAsync } from "./redux/actions/auth.actions";
+import { authUserStart } from "./redux/actions/auth.actions";
 
 class App extends Component {
 
 	componentDidMount(){
-		this.props.getAuthUser()
+		this.props.authUserStart()
 	}
 
 	render() {
@@ -53,7 +53,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	getAuthUser:()=>dispatch(getAuthUserAsync())
+	authUserStart:()=>dispatch(authUserStart())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

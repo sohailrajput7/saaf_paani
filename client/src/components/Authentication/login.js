@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import {Formik,useFormik} from 'formik'
 import * as Yup from 'yup'
 
-import {loginUserAsync} from '../../redux/actions/auth.actions'
+import {loginUserStart} from '../../redux/actions/auth.actions'
 
 export default function({}){
 
@@ -24,7 +24,7 @@ export default function({}){
 	})
 
     const handleLoginFormSubmit = (values)=>{
-		dispatch(loginUserAsync(values))
+		dispatch(loginUserStart(values))
 	}
     
 	const {values,errors,touched,handleChange,handleSubmit}  = useFormik({
@@ -37,11 +37,11 @@ export default function({}){
 		return (
 			<>
 				<div class="pattern">
-					<span class="red"></span>
-					<span class="indigo"></span>
-					<span class="blue"></span>
-					<span class="green"></span>
-					<span class="orange"></span>
+					<span className="red"></span>
+					<span className="indigo"></span>
+					<span className="blue"></span>
+					<span className="green"></span>
+					<span className="orange"></span>
 				</div>
 				<div className="auth-main particles_js">
 					<div className="auth_div vivify popIn">
