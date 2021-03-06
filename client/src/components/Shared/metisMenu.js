@@ -1,3 +1,34 @@
+import {Apps,Group,TransferWithinAStation} from "@material-ui/icons";
+
+const metisMenu = [
+	
+	{ label: "Dashboard", path:"/dashboard" , IconComponent: Apps },
+	{
+		label: "Customers",
+		path: "/customer" ,
+		IconComponent: Group,
+		subMenu: [
+		  { label: "All Customers", path: "/dashboard" },
+		  { label: "Add Customer", path: "/dashboard" },
+		  { label: "Delete Customer", path: "/dashboard" },
+		  { label: "Update Customer", path: "/dashboard" },
+		],
+	},
+	{
+	  label: "Suppliers",
+	  path: "/supplier" ,
+	  IconComponent: TransferWithinAStation,
+	  subMenu: [
+		{ label: "All Suppliers", path: "/dashboard" },
+		{ label: "Add Suppliers", path: "/dashboard" },
+		{ label: "Delete Suppliers", path: "/dashboard" },
+		{ label: "Update Suppliers", path: "/dashboard" },
+	  ],
+	},
+  ];
+
+
+/*
 const metisMenu = [
 	{
 		"id": 'main',
@@ -83,5 +114,5 @@ const metisMenu = [
 	// 	"to": "/",
 	// },
 ];
-
+*/
 export default metisMenu	

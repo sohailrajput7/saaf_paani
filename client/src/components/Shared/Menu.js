@@ -9,6 +9,8 @@ import DefaultLink from './DefaultLink';
 import { Dropdown } from 'react-bootstrap';
 import { setMiniSidebarMenuOn, setMiniHover } from '../../actions/settingsAction';
 
+import SidePanel from '../SidePanel/SidePanel';
+//import moduleName from '@material-ui/core'
 
 class Menu extends Component {
 	constructor(props) {
@@ -23,6 +25,10 @@ class Menu extends Component {
 		return "sdsdfszd";
 	}
 	toggleSubMenu(e) {
+
+		console.log(e.itemId);
+
+
 		let menucClass = ''
 		if (e.itemId) {
 			const subClass = e.items.map((menuItem) => {
@@ -61,6 +67,7 @@ class Menu extends Component {
 			}
 		  });
 	}
+	handleListItem=(listItem)=>{  }
 
 	render() {
 		if (document.getElementById('left-sidebar') && this.props.miniSidebar) {
@@ -103,14 +110,16 @@ class Menu extends Component {
 							</div>
 						</div>
 						<nav id="left-sidebar-nav" className="sidebar-nav">
-							<MetisMenu
+							
+							{<SidePanel listItems={metisMenu} handleListItem={this.handleListItem}/>}
+							{/*<MetisMenu
 								content={metisMenu}
 								noBuiltInClassNames={true}
 								classNameItemActive="active"
 								classNameContainer={(e) => this.toggleSubMenu(e)}
 								classNameContainerVisible="in"
 								LinkComponent={(e) => <DefaultLink itemProps={e} />}
-							/>
+							/>*/}
 						</nav>
 					</div>
 				</div>

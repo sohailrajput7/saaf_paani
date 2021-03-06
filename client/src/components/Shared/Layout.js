@@ -12,7 +12,7 @@ export default class Layout extends Component {
 	render() {
 		return (
 			<>
-				<ThemeSetting />
+				{<ThemeSetting />}
 				<div className="overlay" />
 				<div id="wrapper">
 					<Header />
