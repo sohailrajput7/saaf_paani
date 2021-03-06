@@ -4,10 +4,10 @@ import ForgotPassword from './Authentication/forgotpassword';
 import NotFound from './Authentication/404';
 import Maintenance from './Authentication/maintenance';
 import Dashboard from './Dashboard/dashboard11';
+import Chat from './Messenger/chat'
 
 
 const Routes = [
-
     {
         path: "/dashboard",
         name: 'dashboard',
@@ -15,7 +15,6 @@ const Routes = [
         pageTitle: "Dashboard",
         component: Dashboard
     },
- 
     {
         path: "/login",
         name: 'login',
@@ -64,15 +63,7 @@ const Routes = [
         exact: true,
         pageTitle: "Dashboard",
         component: Dashboard
-    },
-
-    {
-        path: "/supplier",
-        name: 'suppliers',
-        exact: true,
-        pageTitle: "Suppliers",
-        component: Suppliers
-    },
+    }
 ];
 
 export default Routes;

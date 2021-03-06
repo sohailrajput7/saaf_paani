@@ -110,16 +110,14 @@ class Menu extends Component {
 							</div>
 						</div>
 						<nav id="left-sidebar-nav" className="sidebar-nav">
-							
-							{<SidePanel listItems={metisMenu} handleListItem={this.handleListItem}/>}
-							{/*<MetisMenu
+							<MetisMenu
 								content={metisMenu}
 								noBuiltInClassNames={true}
 								classNameItemActive="active"
 								classNameContainer={(e) => this.toggleSubMenu(e)}
 								classNameContainerVisible="in"
 								LinkComponent={(e) => <DefaultLink itemProps={e} />}
-							/>*/}
+							/>
 						</nav>
 					</div>
 				</div>
