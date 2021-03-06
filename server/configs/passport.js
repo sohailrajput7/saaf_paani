@@ -13,9 +13,7 @@ const jwtStrategyOptions ={
 module.exports = function initializePassport(){
     passport.use(new JWTStrategy(jwtStrategyOptions,async (jwtPayload,done)=>{
         try {
-            console.log(jwtPayload)
             const user = await User.findById(jwtPayload.id)
-            console.log("user",user)
             if(!user) return done(new APIError(400,"User does not exists"),false)
 
             return done(null,user)

@@ -1,3 +1,4 @@
+const http = require('http')
 const express = require('express');
 const cors= require('cors');
 const morgan = require('morgan');
@@ -10,7 +11,9 @@ const globalErrorMiddleware = require('./middlewares/globalError')
 
 // Routes
 
-const authRoutes = require('./routes/AuthRoutes')
+const authRoutes = require('./routes/AuthRoutes');
+const userRoutes = require('./routes/UserRoutes');
+const initializeSocketServer = require('./socket');
 
 
 db();
@@ -33,18 +36,26 @@ app.use(express.static(`${__dirname}/uploads`))
 // Routes
 
 app.use('/api/v1/auth',authRoutes)
+app.use('/api/v1/users',userRoutes)
 
 
 
 
 app.use(globalErrorMiddleware)
 
+// Socket server
+
+const httpServer = http.createServer(app)
+
+initializeSocketServer(httpServer)
 
 // Server Start
 
 const PORT = process.env.PORT ?? 5000;
 
-app.listen(PORT,()=>{
+
+
+httpServer.listen(PORT,()=>{
     console.log(`Server is Listening At Port ${PORT}`)
 })
 

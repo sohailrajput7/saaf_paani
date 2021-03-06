@@ -58,6 +58,12 @@ const metisMenu = [
 			},
 		]
 	},
+	{
+		"id": 4,
+		"icon": "user-plus",
+		"label": "Messenger",
+		"to": "/messenger",
+	},
 	// {
 	// 	"id": 4,
 	// 	"icon": "credit-card",

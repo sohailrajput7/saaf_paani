@@ -20,7 +20,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const persistedReducer = persistReducer(persistConfig,rootReducer(history))
 
-const middlewares = [routerMiddleware(history),sagaMiddleware]
+const middlewares = [routerMiddleware(history),sagaMiddleware,thunk]
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

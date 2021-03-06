@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true,"Last Name is required"],
     },
+    profilePicture:{
+        type:String,
+        default:`${process.env.BASE_URL}/profilePictures/default-avatar.jpg`
+    },
     password:{
         type:String,
         required:[true,"Password is required"],

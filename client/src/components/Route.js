@@ -4,6 +4,7 @@ import ForgotPassword from './Authentication/forgotpassword';
 import NotFound from './Authentication/404';
 import Maintenance from './Authentication/maintenance';
 import Dashboard from './Dashboard/dashboard11';
+import Chat from './Messenger/chat'
 
 
 const Routes = [
@@ -50,6 +51,13 @@ const Routes = [
         exact: true,
         pageTitle: "Tables",
         component: NotFound
+    },
+       {
+        path: "/messenger",
+        name: 'messenger',
+        exact: true,
+        pageTitle: "Messenger",
+        component: Chat
     },
        {
         path: "/",

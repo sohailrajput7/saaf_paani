@@ -1,6 +1,5 @@
 import {createAction} from '../../utils/reduxHelper'
 import * as actions from '../types/auth.types'
-import axios from '../../api/axios'
 
 export const registerUserStart = createAction(actions.REGISTER_USER_START)
 export const registerUserSuccess= createAction(actions.REGISTER_USER_SUCCESS)
