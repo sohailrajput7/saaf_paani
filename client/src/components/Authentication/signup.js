@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {Formik,useFormik} from 'formik'
 import * as Yup from 'yup'
 
-import {registerUserAsync} from '../../redux/actions/auth.actions'
+import {registerUserStart} from '../../redux/actions/auth.actions'
 
 export default ({}) =>{
 
@@ -32,7 +32,7 @@ export default ({}) =>{
 	})
 
     const handleSignUpFormSubmit = (values)=>{
-		dispatch(registerUserAsync(values))
+		dispatch(registerUserStart(values))
 	}
     
 	const {values,errors,touched,handleChange,handleSubmit}  = useFormik({

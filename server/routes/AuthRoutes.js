@@ -9,7 +9,7 @@ const authRoutes = express.Router();
 
 authRoutes.route("/register-user").post(registerUser)
 authRoutes.route("/login-user").post(loginUser)
-authRoutes.route('/me').post(passport.authenticate('jwt',{session:false}),getUserFromToken)
+authRoutes.route('/me').get(passport.authenticate('jwt',{session:false}),getUserFromToken)
 
 
 
