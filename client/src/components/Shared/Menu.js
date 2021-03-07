@@ -86,14 +86,14 @@ class Menu extends Component {
 					<div className="sidebar-scroll">
 						<div className="user-account d-flex ">
 							<div className="user_div">
-								<img src="../assets/images/user.png" className="user-photo" alt="User Profile" />
+								<img src={this.props.auth.authUser?.profilePicture} className="user-photo" alt="User Profile" />
 							</div>
 							<div className="dropdown">
 								<span>Welcome,</span>
 								<br />
 								<Dropdown className="ml-0">
 									<Dropdown.Toggle variant="success" id="dropdown-basic" className="user-name left_dropdown_btn">
-										<strong>Louis Pierce</strong>
+										<strong>{`${this.props.auth.authUser?.firstName} ${this.props.auth.authUser?.lastName}`}</strong>
 									</Dropdown.Toggle>
 
 									<Dropdown.Menu>
@@ -132,6 +132,7 @@ const mapStateToProps = state => ({
 	miniSidebar: state.settings.miniSidebar,
 	miniSideMenuOn: state.settings.miniSideMenuOn,
 	miniHover: state.settings.miniHover,
+	auth:state.auth,
 })
 
 const mapDispatchToProps = dispatch => ({

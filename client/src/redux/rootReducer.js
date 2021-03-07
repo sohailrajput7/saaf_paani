@@ -6,6 +6,7 @@ import settingsReducer from './reducers/settings';
 import authReducer from './reducers/auth.reducer'
 import userReducer from "./reducers/users.reducer";
 import conversationReducer from "./reducers/conversation.reducer";
+import supplierReducer from "./reducers/supplier.reducer";
 
 
 export default (history)=>combineReducers({
@@ -13,5 +14,6 @@ export default (history)=>combineReducers({
     settings:settingsReducer,
     auth:authReducer,
     users:userReducer,
-    conversation:conversationReducer
+    conversation:conversationReducer,
+    supplier:supplierReducer
 });

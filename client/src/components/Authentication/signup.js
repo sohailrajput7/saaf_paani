@@ -18,9 +18,9 @@ export default ({}) =>{
 		email:"",
 		address:"",
 		password:"",
-		phoneNo:""
+		phoneNo:"",
+		age:0,
 	}
-
 
 	const validationSchema = Yup.object().shape({
 		firstName:Yup.string().required().label("First Name"),
@@ -29,6 +29,7 @@ export default ({}) =>{
 		password:Yup.string().required().label("Password"),
 		address:Yup.string().required().label("Address"),
 		phoneNo:Yup.string().required().label("Phone No"),
+		age:Yup.number().min(18,"Age must be at least 18").max(60,"Age can not be greater than 60").label("Age")
 	})
 
     const handleSignUpFormSubmit = (values)=>{
@@ -85,6 +86,10 @@ export default ({}) =>{
 									<div className="form-group">
 										<input type="text" className="form-control round" name="phoneNo" onChange={handleChange} placeholder="Your Phone No" value={values.phoneNo} />
 										{errors.phoneNo && touched.phoneNo &&<div className="text-danger text-left mt-1 ml-2">{errors.phoneNo}</div>}									
+									</div>
+									<div className="form-group">
+										<input type="text" className="form-control round" name="age" onChange={handleChange} placeholder="Your Age" value={values.age} />
+										{errors.age && touched.age &&<div className="text-danger text-left mt-1 ml-2">{errors.age}</div>}
 									</div>
 									<div className="form-group">
 										<input type="password" className="form-control round" name="password" onChange={handleChange} placeholder="Password" value={values.password} />
