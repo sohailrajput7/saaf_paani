@@ -4,6 +4,7 @@ import ForgotPassword from './Authentication/forgotpassword';
 import NotFound from './Authentication/404';
 import Maintenance from './Authentication/maintenance';
 import Dashboard from './Dashboard/dashboard11';
+import SupplierInventory from './Pages/SupplierInventory/SupplierInventory';
 
 
 const Routes = [
@@ -52,11 +53,11 @@ const Routes = [
         component: NotFound
     },
        {
-        path: "/messenger",
-        name: 'messenger',
+        path: "/supplierInventory",
+        name: 'supplierInventory',
         exact: true,
-        pageTitle: "Messenger",
-        component: Chat
+        pageTitle: "Inventory",
+        component: SupplierInventory
     },
        {
         path: "/",
@@ -66,13 +67,13 @@ const Routes = [
         component: Dashboard
     },
 
-    {
-        path: "/supplier",
-        name: 'suppliers',
-        exact: true,
-        pageTitle: "Suppliers",
-        component: Suppliers
-    },
+    // {
+    //     path: "/supplier",
+    //     name: 'suppliers',
+    //     exact: true,
+    //     pageTitle: "Suppliers",
+    //     component: Suppliers
+    // },
 ];
 
 export default Routes;

@@ -10,6 +10,7 @@ import SignUp from './components/Authentication/signup';
 import ForgotPassword from './components/Authentication/forgotpassword';
 import NotFound from './components/Authentication/404';
 import Maintenance from './components/Authentication/maintenance';
+import SupplierInventory from './components/Pages/SupplierInventory/SupplierInventory';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { authUserStart } from "./redux/actions/auth.actions";
@@ -35,6 +36,7 @@ class App extends Component {
 						<Route path="/forgotpassword" component={ForgotPassword} />
 						<Route path="/notfound" component={NotFound} />
 						<Route path="/maintenance" component={Maintenance} />
+						<Route path="/supplierInventory" component={SupplierInventory} />
 						<Route component={Layout} />
 					</Switch>
 			</div>
