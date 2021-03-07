@@ -6,6 +6,8 @@ import Maintenance from './Authentication/maintenance';
 import Dashboard from './Dashboard/dashboard11';
 import Chat from './Messenger/chat'
 
+import Suppliers from './Suppliers/Suppliers'
+import AddSupplier from './Suppliers/AddSupplier'
 
 const Routes = [
     {
@@ -58,12 +60,19 @@ const Routes = [
         component: Chat
     },
        {
-        path: "/",
-        name: 'dashboard',
+        path: "/suppliers/all",
+        name: 'suppliers',
         exact: true,
-        pageTitle: "Dashboard",
-        component: Dashboard
-    }
+        pageTitle: "Suppliers",
+        component: Suppliers
+    },
+    {
+        path: "/suppliers/add",
+        name: 'suppliers',
+        exact: true,
+        pageTitle: "Suppliers",
+        component: AddSupplier
+    },
 ];
 
 export default Routes;
