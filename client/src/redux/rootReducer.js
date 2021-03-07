@@ -5,11 +5,13 @@ import history from '../utils/history'
 import settingsReducer from './reducers/settings';
 import authReducer from './reducers/auth.reducer'
 import userReducer from "./reducers/users.reducer";
+import conversationReducer from "./reducers/conversation.reducer";
 
 
 export default (history)=>combineReducers({
     router:connectRouter(history),
     settings:settingsReducer,
     auth:authReducer,
-    users:userReducer
+    users:userReducer,
+    conversation:conversationReducer
 });

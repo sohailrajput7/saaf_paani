@@ -3,12 +3,16 @@ const Conversation = require('../models/Conversation')
 const ConversationReply = require('../models/ConversationReply')
 
 
-function messagingSockets(io,socket,usersConnected){
+function messagingSockets(io,socket){
+    socket.on(types.CHAT_CONNECT,async ({userId})=>{
+        socket.join(userId)
+    })
+
     socket.on(types.PRIVATE_MESSAGE,async ({senderId,receiverId,content})=>{
         let conversation = await Conversation.findOne({
             $or:[
-                {userOneId:receiverId},
-                {userTwoId:senderId}
+                    {userOneId:receiverId},
+                    {userTwoId:senderId}
                 ]
         })
 
