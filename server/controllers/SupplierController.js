@@ -25,7 +25,7 @@ exports.createSupplier = catchAsync(async (req,res,next)=>{
 })
 
 exports.getAllSuppliers = catchAsync(async (req,res,next)=>{
-    const suppliers = await Supplier.find();
+    const suppliers = await Supplier.find().populate('userId');
 
     res.status(200).json({
         status:"success",
@@ -55,10 +55,16 @@ exports.deleteSupplierById = catchAsync(async(req,res,next)=>{
 
     await supplier.delete();
 
+    res.status(200).json({
+        status:"success",
+        data:supplier
+    })
+
 })
 
 exports.updateSupplierById = catchAsync(async(req,res,next)=>{
     const supplier = await Supplier.findById(req.params.id);
+    delete req.body['_id']
 
     if(!supplier)
         return next(new APIError("No Supplier exists with this id",400))
@@ -67,6 +73,8 @@ exports.updateSupplierById = catchAsync(async(req,res,next)=>{
 
     supplier.cnic = req.body.cnic ?? supplier.cnic;
     supplier.verified = req.body.verified ?? supplier.verified;
+
+    await supplier.save()
 
     res.status(200).json({
         status:"success",

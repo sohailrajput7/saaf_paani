@@ -6,6 +6,6 @@ const supplierRouter = express.Router();
 
 supplierRouter.route('/').post(createSupplier).get(getAllSuppliers);
 
-supplierRouter.route('/:id').get(getSupplierById).put(updateSupplierById).delete(deleteSupplierById)
+supplierRouter.route('/:id').get(getSupplierById).patch(updateSupplierById).delete(deleteSupplierById)
 
 module.exports = supplierRouter;
