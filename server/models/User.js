@@ -33,10 +33,16 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true,"Phone Number is required"]
     },
+    age: {
+        type: Number,
+        required: true,
+        min: [18,"Age must be at least 18"],
+        max: [60,"Age can not be greater than 60"]
+    },
     role:{
         type:String,
         enum:[Roles.User,Roles.Admin]
-    }
+    },
 })
 
 userSchema.methods.getHashPassword = async function(password){

@@ -14,7 +14,7 @@ function* getUsersForConversations(action){
 }
 
 function* watchGetUsersForConversations(){
-    yield throttle(5000,actionTypes.USERS_FOR_CONVERSATIONS_START,getUsersForConversations)
+    yield throttle(2000,actionTypes.USERS_FOR_CONVERSATIONS_START,getUsersForConversations)
 }
 
 function* userSagas(){

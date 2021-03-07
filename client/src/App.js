@@ -10,8 +10,13 @@ import SignUp from './components/Authentication/signup';
 import ForgotPassword from './components/Authentication/forgotpassword';
 import NotFound from './components/Authentication/404';
 import Maintenance from './components/Authentication/maintenance';
+<<<<<<< HEAD
 import SupplierInventory from './components/Pages/SupplierInventory/SupplierInventory';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+=======
+import Logout from "./components/Logout/logout";
+import { BrowserRouter as Router, Switch, Route,Redirect } from 'react-router-dom';
+>>>>>>> 4a830426f014bdb8c86efac960530d2aedc5141e
 
 import { authUserStart } from "./redux/actions/auth.actions";
 
@@ -36,8 +41,13 @@ class App extends Component {
 						<Route path="/forgotpassword" component={ForgotPassword} />
 						<Route path="/notfound" component={NotFound} />
 						<Route path="/maintenance" component={Maintenance} />
+<<<<<<< HEAD
 						<Route path="/supplierInventory" component={SupplierInventory} />
+=======
+						<Route path="/logout" component={Logout}/>
+>>>>>>> 4a830426f014bdb8c86efac960530d2aedc5141e
 						<Route component={Layout} />
+						<Redirect to="/login" />
 					</Switch>
 			</div>
 		);

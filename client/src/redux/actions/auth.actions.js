@@ -12,3 +12,4 @@ export const loginUserError = createAction(actions.LOGIN_USER_ERROR)
 
 export const authUserStart = createAction(actions.AUTH_USER_START)
 
+export const logout = createAction(actions.LOGOUT)

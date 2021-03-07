@@ -36,6 +36,10 @@ const authReducer = produce((draft,action)=>{
             draft.authUser = null
             draft.error.login = action.payload
             break;
+
+        case actions.LOGOUT:
+            draft.authUser = null
+            break;
     }
 },initialState)
 

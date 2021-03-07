@@ -4,11 +4,16 @@ import ForgotPassword from './Authentication/forgotpassword';
 import NotFound from './Authentication/404';
 import Maintenance from './Authentication/maintenance';
 import Dashboard from './Dashboard/dashboard11';
+<<<<<<< HEAD
 import SupplierInventory from './Pages/SupplierInventory/SupplierInventory';
+=======
+import Chat from './Messenger/chat'
+>>>>>>> 4a830426f014bdb8c86efac960530d2aedc5141e
 
+import Suppliers from './Suppliers/Suppliers'
+import AddSupplier from './Suppliers/AddSupplier'
 
 const Routes = [
-
     {
         path: "/dashboard",
         name: 'dashboard',
@@ -16,7 +21,6 @@ const Routes = [
         pageTitle: "Dashboard",
         component: Dashboard
     },
- 
     {
         path: "/login",
         name: 'login',
@@ -60,12 +64,13 @@ const Routes = [
         component: SupplierInventory
     },
        {
-        path: "/",
-        name: 'dashboard',
+        path: "/suppliers/all",
+        name: 'suppliers',
         exact: true,
-        pageTitle: "Dashboard",
-        component: Dashboard
+        pageTitle: "Suppliers",
+        component: Suppliers
     },
+<<<<<<< HEAD
 
     // {
     //     path: "/supplier",
@@ -74,6 +79,15 @@ const Routes = [
     //     pageTitle: "Suppliers",
     //     component: Suppliers
     // },
+=======
+    {
+        path: "/suppliers/add",
+        name: 'suppliers',
+        exact: true,
+        pageTitle: "Suppliers",
+        component: AddSupplier
+    },
+>>>>>>> 4a830426f014bdb8c86efac960530d2aedc5141e
 ];
 
 export default Routes;

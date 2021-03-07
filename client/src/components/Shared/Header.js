@@ -47,8 +47,7 @@ const Header = ({ toggleMegamenu, isMegaMenu, toggleNotificationBar, toggleSearc
                     <div className="navbar-right">
                         <div id="navbar-menu">
                             <ul className="nav navbar-nav">
-                                <li><span onClick={() => toggleNotificationBar(true)} className="right_toggle icon-menu" title="Right Menu"><i className="icon-bubbles"></i><span className="notification-dot bg-pink">2</span></span></li>
-                                <li><Link to="/login" className="icon-menu"><i className="icon-power"></i></Link></li>
+                                <li><Link to="/logout" className="icon-menu"><i className="icon-power"></i></Link></li>
                             </ul>
                         </div>
                     </div>

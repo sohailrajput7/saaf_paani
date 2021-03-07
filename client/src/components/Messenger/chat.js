@@ -3,18 +3,25 @@ import {useDispatch, useSelector} from "react-redux";
 import { Link } from 'react-router-dom';
 
 import {usersForConversationsStart} from '../../redux/actions/users.actions'
+import {conversationsOfUsersStart} from "../../redux/actions/conversation.actions";
+
 
 const Messenger = () => {
     const dispatch = useDispatch()
     const users = useSelector(state=>state.users);
 
     const [search,setSearch] = useState("");
-    const [currentChatMsgs,setCurrentChatMsgs] = useState([]);
+    const [conversations,setConversations] = useState([])
     const [currentChatUser,setCurrentChatUser] = useState(null);
 
+    useEffect(()=>{
+        dispatch(conversationsOfUsersStart())
+    },[])
 
     useEffect(()=>{
-        dispatch(usersForConversationsStart(search))
+        if(search)
+            dispatch(usersForConversationsStart(search))
+
     },[search])
 
     useEffect(()=>{
@@ -27,6 +34,11 @@ const Messenger = () => {
     }
 
     const handleCurrentChatUserChange = (user)=>{
+        const isConversationExists = conversations?.some(conv=>conv.userOneId === user.id || conv.userTwoId === user.id)
+        // if(!isConversationExists){
+        //     setConversation([...con])
+        // }
+
         setCurrentChatUser(user)
     }
 
@@ -37,7 +49,7 @@ const Messenger = () => {
                 <div className="block-header">
                     <div className="row clearfix">
                         <div className="col-md-6 col-sm-12">
-                            <h2>Chat</h2>
+                            <h2>Chats</h2>
                         </div>
                     </div>
                 </div>
@@ -53,7 +65,7 @@ const Messenger = () => {
                                         </div>
                                     </div>
                                     <ul className="right_chat list-unstyled mb-0">
-                                        {users.conversationUsers?.map(user=>{
+                                        {search?users.conversationUsers?.map(user=>{
                                             return (
                                                 <li className="offline" onClick={()=>handleCurrentChatUserChange(currentChatUser)}>
                                                     <div className="media">
@@ -66,7 +78,22 @@ const Messenger = () => {
                                                     </div>
                                                 </li>
                                             )
-                                        })}
+                                        }):conversations.conversationData?.map(conv=>{
+                                            return (
+                                                <li className="offline" >
+                                                    <div className="media">
+                                                        <img className="media-object" src={conv.profilePicture} alt="avatar"/>
+                                                        <div className="media-body">
+                                                            <span className="name">{`${conv.firstName} ${conv.lastName}`}</span>
+                                                            {/*<span className="message">offline</span>*/}
+                                                            {/*<span className="badge badge-outline status"></span>*/}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            )
+                                        })
+
+                                        }
 
                                     </ul>
                                 </div>

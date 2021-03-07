@@ -5,6 +5,10 @@ const conversationReplySchema = new mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:"Conversation"
     },
+    userId:{
+        type:mongoose.Types.ObjectId,
+        ref:"User",
+    },
     content:{
         type:String,
         required:[true,"The message content is required"]

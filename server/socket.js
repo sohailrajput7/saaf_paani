@@ -8,24 +8,13 @@ const options = {
     }
 }
 
-const usersConnected = [];
 
 function initializeSocketServer(httpServer){
     socketInstance = io(httpServer,options)
 
     socketInstance.on('connection',(socket)=>{
-        usersConnected.push({
-            id:socket.id
-        })
-
-        messagingSockets(io,socket,usersConnected)
+        messagingSockets(io,socket)
     })
-
-    socketInstance.on('disconnected',(id)=>{
-        const deleteUserIndex = usersConnected.findIndex(user=>user.id === id);
-        usersConnected.splice(deleteUserIndex,1)
-    })
-
 
 }
 

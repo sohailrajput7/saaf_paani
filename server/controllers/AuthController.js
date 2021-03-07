@@ -4,14 +4,14 @@ const catchAsync = require('../utils/catchAsync')
 
 
 exports.registerUser = catchAsync(async (req,res,next)=>{
-    const {firstName,lastName,email,password,address,phoneNo} = req.body;
+    const {firstName,lastName,email,password,address,phoneNo,age} = req.body;
 
     const isUserExists = await User.findOne({email});
 
     if(isUserExists) return next(new APIError("The user with same email already exists",400))
 
     const user = await User.create({
-        firstName,lastName,email,password,address,phoneNo
+        firstName,lastName,email,password,address,phoneNo,age
     })
 
     res.status(200).json({
