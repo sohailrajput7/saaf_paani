@@ -1,3 +1,4 @@
+import React from 'react'
 import Login from './Authentication/login';
 import Signup from './Authentication/signup';
 import ForgotPassword from './Authentication/forgotpassword';
@@ -72,6 +73,13 @@ const Routes = [
         exact: true,
         pageTitle: "Suppliers",
         component: AddSupplier
+    },
+    {
+        path: "/suppliers/:id",
+        name: 'suppliers',
+        exact: true,
+        pageTitle: "Suppliers",
+        component: (props)=><AddSupplier {...props} isEditing />
     },
 ];
 

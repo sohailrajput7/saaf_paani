@@ -3,6 +3,7 @@ import * as actions from '../types/supplier.types'
 
 const initialState = {
     isLoading:false,
+    suppliersData:[],
     error:{
     },
 }
@@ -14,10 +15,18 @@ const supplierReducer = produce((draft,action)=>{
             draft.isLoading = true;
             break;
 
-        case actions.CREATE_SUPPLIER_SUCCESS:
+        case actions.CREATE_SUPPLIER_SUCCESS,actions.UPDATE_SUPPLIER_SUCCESS,actions.DELETE_SUPPLIER_SUCCESS:
             draft.isLoading = false;
             break;
 
+        case actions.GET_ALL_SUPPLIERS_START,actions.UPDATE_SUPPLIER_START,actions.DELETE_SUPPLIER_START:
+            draft.isLoading = true;
+            break;
+
+        case actions.GET_ALL_SUPPLIERS_SUCCESS:
+            draft.isLoading = false;
+            draft.suppliersData = action.payload;
+            break;
 
     }
 },initialState)

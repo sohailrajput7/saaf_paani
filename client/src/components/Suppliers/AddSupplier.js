@@ -1,15 +1,18 @@
-import React,{useState} from 'react';
-import SupplierTitle from './SupplierTitle';
+import React, {useEffect, useState} from 'react';
+import {push} from 'connected-react-router'
+import {useParams,useHistory,useLocation} from 'react-router-dom'
 import {useDispatch,useSelector} from 'react-redux'
 import {Formik,useFormik} from 'formik'
 import * as Yup from 'yup';
 
-import {createSupplierStart} from '../../redux/actions/supplier.actions'
+import {createSupplierStart, deleteSupplierStart, updateSupplierStart} from '../../redux/actions/supplier.actions'
 
-const AddSupplier = () => {
-
+const AddSupplier = (props) => {
+    const [isModal,setIsModal] = useState(false);
 
     const dispatch = useDispatch()
+    const supplier = useSelector(state=>state.supplier);
+    const params = useParams();
 
 	const initialValues = {
 		firstName:"sohail",
@@ -34,19 +37,48 @@ const AddSupplier = () => {
         cnic:Yup.string().min(13,"CNIC must be 13 characters long").max(13,"CNIC must be 13 characters long").required().label("CNIC"),
 	})
 
-    const handleCreateSupplier = async(values)=>{
-        console.log("values");
-		dispatch(createSupplierStart(values))
-	}
-    
-	const {values,errors,touched,handleChange,handleSubmit}  = useFormik({
+    const handleFormSubmit = (values)=>{
+        dispatch(createSupplierStart(values))
+    }
+
+	const {values,errors,touched,handleChange,handleSubmit,setValues}  = useFormik({
 		initialValues,
 		validationSchema,
-		onSubmit:handleCreateSupplier
+		onSubmit:handleFormSubmit
 	})
+
+    const toggleModal = ()=>{
+	    setIsModal(!isModal);
+    }
+
+    console.log('test',values)
+
+    useEffect(()=>{
+        if(props.isEditing){
+            const {userId: {firstName, lastName, age, email, phoneNo}, cnic, verified} = supplier.suppliersData.find(supp=>supp._id === params.id)
+            setValues({
+                firstName,
+                lastName,
+                age,
+                email,
+                phoneNo,
+                cnic,
+                password:""
+            })
+        }
+    },[])
+
     return (
         <>
-            <SupplierTitle/>
+            <div className="container-fluid">
+                <div className="block-header">
+                    <div className="row clearfix">
+                        <div className="col-md-6 col-sm-12">
+                            <h1>{props.isEditing?"Edit Supplier":"Add Supplier"}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="container-fluid">
                 
                 <div className="row clearfix">
@@ -127,7 +159,12 @@ const AddSupplier = () => {
                                     </div>
 
                                     <br />
-                                    <button type="submit" className="btn btn-primary" >Create</button>
+                                    {props.isEditing?(
+                                        <div>
+                                            <button onClick={()=>dispatch(updateSupplierStart({...values,_id:params.id}))} type="button" className="btn btn-warning mr-4" >Update</button>
+                                            <button type="button" className="btn btn-danger" onClick={toggleModal} >Delete</button>
+                                        </div>
+                                    ):<button type="submit" className="btn btn-primary">Create</button>}
                                 </form>
                             </div>
                         </div>
@@ -136,6 +173,25 @@ const AddSupplier = () => {
 
             </div>
 
+            <div className={`modal fade  ${isModal? 'd-block show' : ''}`} id="exampleModal"  onClick={toggleModal}>
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Delete Supplier Confirmation</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <p>Are you sure you want to delete this supplier?</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-round btn-default" data-dismiss="modal" onClick={toggleModal}>Close</button>
+                            <button type="button" className="btn btn-round btn-primary" onClick={()=>dispatch(deleteSupplierStart({_id:params.id}))}>Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </>
     );
