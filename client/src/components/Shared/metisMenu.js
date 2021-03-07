@@ -68,23 +68,15 @@ const metisMenu = [
 		"id": 3,
 		"icon": "user-plus",
 		"label": "Suppliers",
-		"to": "/",
+		"to": "/suppliers",
 		content:[
 			{
 				"label": "All Suppliers",
-				"to": "/",
+				"to": "/suppliers/all",
 			},
 			{
 				"label": "Add Supplier",
-				"to": "/",
-			},
-			{
-				"label": "Update Supplier",
-				"to": "/",
-			},
-			{
-				"label": "Delete Supplier",
-				"to": "/",
+				"to": "/suppliers/add",
 			},
 		]
 	},

@@ -26,7 +26,7 @@ class Menu extends Component {
 	}
 	toggleSubMenu(e) {
 
-		console.log(e.itemId);
+		//console.log(e.itemId);
 
 
 		let menucClass = ''

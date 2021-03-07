@@ -15,6 +15,7 @@ const authRoutes = require('./routes/AuthRoutes');
 const userRoutes = require('./routes/UserRoutes');
 const initializeSocketServer = require('./socket');
 
+const supplier=require('./routes/Supplier');
 
 db();
 initializePassport()
@@ -37,7 +38,7 @@ app.use(express.static(`${__dirname}/uploads`))
 
 app.use('/api/v1/auth',authRoutes)
 app.use('/api/v1/users',userRoutes)
-
+app.use('/suppliers',supplier)
 
 
 
