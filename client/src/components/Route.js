@@ -5,6 +5,7 @@ import ForgotPassword from './Authentication/forgotpassword';
 import NotFound from './Authentication/404';
 import Maintenance from './Authentication/maintenance';
 import Dashboard from './Dashboard/dashboard11';
+import SupplierInventory from './Pages/SupplierInventory/SupplierInventory';
 import Chat from './Messenger/chat'
 
 import Suppliers from './Suppliers/Suppliers'
@@ -54,11 +55,11 @@ const Routes = [
         component: NotFound
     },
        {
-        path: "/messenger",
-        name: 'messenger',
+        path: "/supplierInventory",
+        name: 'supplierInventory',
         exact: true,
-        pageTitle: "Messenger",
-        component: Chat
+        pageTitle: "Inventory",
+        component: SupplierInventory
     },
        {
         path: "/suppliers/all",
@@ -67,6 +68,7 @@ const Routes = [
         pageTitle: "Suppliers",
         component: Suppliers
     },
+
     {
         path: "/suppliers/add",
         name: 'suppliers',
