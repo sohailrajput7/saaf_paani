@@ -1,33 +1,3 @@
-import {Apps,Group,TransferWithinAStation} from "@material-ui/icons";
-
-// const metisMenu = [
-//
-// 	{ label: "Dashboard", path:"/dashboard" , IconComponent: Apps },
-// 	{
-// 		label: "Customers",
-// 		path: "/customer" ,
-// 		IconComponent: Group,
-// 		subMenu: [
-// 		  { label: "All Customers", path: "/dashboard" },
-// 		  { label: "Add Customer", path: "/dashboard" },
-// 		  { label: "Delete Customer", path: "/dashboard" },
-// 		  { label: "Update Customer", path: "/dashboard" },
-// 		],
-// 	},
-// 	{
-// 	  label: "Suppliers",
-// 	  path: "/supplier" ,
-// 	  IconComponent: TransferWithinAStation,
-// 	  subMenu: [
-// 		{ label: "All Suppliers", path: "/dashboard" },
-// 		{ label: "Add Suppliers", path: "/dashboard" },
-// 		{ label: "Delete Suppliers", path: "/dashboard" },
-// 		{ label: "Update Suppliers", path: "/dashboard" },
-// 	  ],
-// 	},
-//   ];
-
-
 const metisMenu = [
 	{
 		"id": 'main',
@@ -47,62 +17,48 @@ const metisMenu = [
 		"to": "/customers",
 		content:[
 		{
+			id:3,
 			"label": "All Customers",
-			"to": "/",
+			"to": "/customers/all",
 		},
 		{
+			id:4,
 			"label": "Add Customer",
-			"to": "/",
-		},
-		{
-			"label": "Update Customer",
-			"to": "/",
-		},
-		{
-			"label": "Delete Customer",
-			"to": "/",
+			"to": "/customers/add",
 		},
 		]
 	},
 	{
-		"id": 3,
+		"id":5,
 		"icon": "user-plus",
 		"label": "Suppliers",
 		"to": "/suppliers",
 		content:[
 			{
+				id:6,
 				"label": "All Suppliers",
 				"to": "/suppliers/all",
 			},
 			{
+				id:7,
 				"label": "Add Supplier",
 				"to": "/suppliers/add",
 			},
 		]
 	},
 	{
-		"id": 4,
+		"id": 8,
+		"icon": "dollar",
+		"label": "Sales",
+		"to": "/sales",
+	},
+	{
+		"id": 9,
 		"icon": "user-plus",
 		"label": "Messenger",
 		"to": "/messenger",
 	},
-	// {
-	// 	"id": 4,
-	// 	"icon": "credit-card",
-	// 	"label": "Revenue",
-	// 	"to": "/",
-	// },
-	// {
-	// 	"id": 5,
-	// 	"icon": "envelope",
-	// 	"label": "Messages",
-	// 	"to": "/",
-	// },
-	// {
-	// 	"id": 6,
-	// 	"icon": "cogs",
-	// 	"label": "Settings",
-	// 	"to": "/",
-	// },
+
+
 ];
 export default metisMenu
