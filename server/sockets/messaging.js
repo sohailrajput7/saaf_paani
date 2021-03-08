@@ -1,25 +1,26 @@
 const types = require('./types')
-const Conversation = require('../models/Conversation')
 const ConversationReply = require('../models/ConversationReply')
 
 
 function messagingSockets(io,socket){
     socket.on(types.CHAT_CONNECT,async ({userId})=>{
         socket.join(userId)
+        socket.emit(types.CHAT_CONNECT);
     })
 
-    socket.on(types.PRIVATE_MESSAGE,async ({senderId,receiverId,content})=>{
-        let conversation = await Conversation.findOne({
-            $or:[
-                    {userOneId:receiverId},
-                    {userTwoId:senderId}
-                ]
+    socket.on(types.PRIVATE_MESSAGE,async ({senderId,receiverId,senderProfilePicture,conversationId,content})=>{
+        io.to(receiverId).emit('private-message',{
+            senderId,
+            senderProfilePicture,
+            receiverId,
+            content
         })
 
-        if(!conversation){
-            conversation = await Conversation.create({userOneId:senderId,userTwoId:receiverId})
-        }
-        const reply = await ConversationReply.create({conversationId:conversation._id,content})
+        const reply = ConversationReply.create({
+            userId:senderId,
+            conversationId,
+            content
+        })
     })
 }
 

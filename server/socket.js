@@ -13,7 +13,7 @@ function initializeSocketServer(httpServer){
     socketInstance = io(httpServer,options)
 
     socketInstance.on('connection',(socket)=>{
-        messagingSockets(io,socket)
+        messagingSockets(socketInstance,socket)
     })
 
 }

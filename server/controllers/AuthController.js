@@ -16,7 +16,8 @@ exports.registerUser = catchAsync(async (req,res,next)=>{
 
     res.status(200).json({
         status:"success",
-        data:user
+        data:user,
+        token:user.getJWTToken(),
     })
 })
 
@@ -35,6 +36,7 @@ exports.loginUser = catchAsync(async (req,res,next)=>{
 
     res.status(200).json({
         status:"success",
+        data:user,
         token:user.getJWTToken()
     })
 })
