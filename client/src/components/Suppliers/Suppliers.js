@@ -4,6 +4,7 @@ import {push} from 'connected-react-router'
 import {MDBDataTable, MDBBtnGroup, MDBBtn} from 'mdbreact';
 
 import {getAllSuppliersStart} from '../../redux/actions/supplier.actions'
+import {createConversationStart} from '../../redux/actions/conversation.actions'
 import SupplierTitle from './SupplierTitle'
 
 const supplierDataTable = {
@@ -67,8 +68,12 @@ const Suppliers = () => {
         dispatch(push(`/suppliers/${supplierId}`))
     }
 
+    const handleAddToContact = (supplierId)=>{
+        dispatch(createConversationStart({userTwoId:supplierId}))
+    }
+
     const transformSuppliersData = ()=>{
-        supplierDataTable.rows =  supplier.suppliersData?.map(({userId: {firstName, lastName, age, email, phoneNo}, cnic, verified,_id}, index) => {
+        supplierDataTable.rows =  supplier.suppliersData?.map(({userId: {_id:user,firstName, lastName, age, email, phoneNo}, cnic, verified,_id}, index) => {
             return {
                 id: index + 1,
                 firstName,
@@ -79,7 +84,7 @@ const Suppliers = () => {
                 cnic,
                 verified: verified ? "Approved" : "Not Approved",
                 actions: <MDBBtnGroup>
-                    <MDBBtn color="warning" size="sm">Add Contact</MDBBtn>
+                    <MDBBtn color="warning" size="sm" onClick={()=>handleAddToContact(user)}>Add Contact</MDBBtn>
                     <MDBBtn color="primary" size="sm" onClick={()=>handleSupplierView(_id)}>View</MDBBtn>
                 </MDBBtnGroup>
 

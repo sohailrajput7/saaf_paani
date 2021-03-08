@@ -1,47 +1,94 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { Link } from 'react-router-dom';
 
-import {usersForConversationsStart} from '../../redux/actions/users.actions'
-import {conversationsOfUsersStart} from "../../redux/actions/conversation.actions";
+import socket from '../../api/socketio';
+import {conversationsOfUsersStart,getRepliesOfConversationStart,addMsgInReplies} from "../../redux/actions/conversation.actions";
 
 
 const Messenger = () => {
     const dispatch = useDispatch()
-    const users = useSelector(state=>state.users);
+    const auth = useSelector(state=>state.auth);
+    const conversation = useSelector(state=>state.conversation);
 
     const [search,setSearch] = useState("");
-    const [conversations,setConversations] = useState([])
+    const [msgInput,setMsgInput] = useState("");
     const [currentChatUser,setCurrentChatUser] = useState(null);
+    const [currentConversationId,setCurrentConversationId] = useState("");
 
     useEffect(()=>{
         dispatch(conversationsOfUsersStart())
+        socket.emit("chat-connect",{userId:auth.authUser?._id});
+        socket.on('private-message',(newMsgObject)=>{
+            setCurrentChatUser(user=>{
+                if(user._id === newMsgObject.senderId)
+                    dispatch(addMsgInReplies(newMsgObject))
+                return user;
+            })
+        })
+
+        return ()=>{
+            socket.off("private-message");
+        }
+
     },[])
 
     useEffect(()=>{
-        if(search)
-            dispatch(usersForConversationsStart(search))
-
-    },[search])
-
-    useEffect(()=>{
-
-    },[])
-
+        if(currentChatUser)
+           dispatch(getRepliesOfConversationStart({conversationId:currentConversationId}))
+    },[currentChatUser])
 
     const handleSearchChange = e=>{
         setSearch(e.target.value)
     }
 
-    const handleCurrentChatUserChange = (user)=>{
-        const isConversationExists = conversations?.some(conv=>conv.userOneId === user.id || conv.userTwoId === user.id)
-        // if(!isConversationExists){
-        //     setConversation([...con])
-        // }
+    const handleSendMessage = ()=>{
+        const newMsgObj = {
+            senderId:auth.authUser._id,
+            senderProfilePicture:auth.authUser.profilePicture,
+            receiverId:currentChatUser._id,
+            conversationId:currentConversationId,
+            content:msgInput,
+        }
+        setMsgInput("");
+        socket.emit('private-message',newMsgObj)
+        dispatch(addMsgInReplies(newMsgObj));
 
-        setCurrentChatUser(user)
     }
 
+
+    const renderConversation = (conversation)=>{
+        const user = auth.authUser._id === conversation.userOneId._id?conversation.userTwoId:conversation.userOneId;
+
+        return (
+            <li key={user._id} className="offline" onClick={()=>{
+                setCurrentChatUser(user);
+                setCurrentConversationId(conversation._id);
+            }}>
+                <div className="media">
+                    <img className="media-object" src={user.profilePicture} alt="avatar"/>
+                    <div className="media-body">
+                        <span className="name">{`${user.firstName} ${user.lastName}`}</span>
+                        {/*<span className="message">offline</span>*/}
+                        {/*<span className="badge badge-outline status"></span>*/}
+                    </div>
+                </div>
+            </li>
+        )
+    }
+
+    const renderConversationReply = (reply)=>{
+        const isLoggedInUser = reply.userId._id === auth.authUser._id;
+
+        return (
+            <li className={`${isLoggedInUser?"left":"right"} clearfix`}>
+                <img className="user_pix" src={reply.userId.profilePicture} alt="avatar" />
+                <div className="message">
+                    <span>{reply.content}</span>
+                </div>
+                <span className="data_time">{reply.createdAt}</span>
+            </li>
+        )
+    }
 
     return (
         <>
@@ -65,79 +112,39 @@ const Messenger = () => {
                                         </div>
                                     </div>
                                     <ul className="right_chat list-unstyled mb-0">
-                                        {search?users.conversationUsers?.map(user=>{
-                                            return (
-                                                <li className="offline" onClick={()=>handleCurrentChatUserChange(currentChatUser)}>
-                                                    <div className="media">
-                                                        <img className="media-object" src={user.profilePicture} alt="avatar"/>
-                                                        <div className="media-body">
-                                                            <span className="name">{`${user.firstName} ${user.lastName}`}</span>
-                                                            {/*<span className="message">offline</span>*/}
-                                                            {/*<span className="badge badge-outline status"></span>*/}
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            )
-                                        }):conversations.conversationData?.map(conv=>{
-                                            return (
-                                                <li className="offline" >
-                                                    <div className="media">
-                                                        <img className="media-object" src={conv.profilePicture} alt="avatar"/>
-                                                        <div className="media-body">
-                                                            <span className="name">{`${conv.firstName} ${conv.lastName}`}</span>
-                                                            {/*<span className="message">offline</span>*/}
-                                                            {/*<span className="badge badge-outline status"></span>*/}
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            )
+                                        {conversation.conversationData?.map(conv=>{
+                                            return renderConversation(conv);
                                         })
-
                                         }
 
                                     </ul>
                                 </div>
+
                                 <div className="chatapp_body mr-0">
                                     <div className="chat-header clearfix">
                                         <div className="row clearfix">
                                             <div className="col-lg-12">
                                                 <div className="chat-about">
-                                                    <h6 className="m-b-0">Louis Pierce</h6>
+                                                    {currentChatUser && <h6 className="m-b-0">{`${currentChatUser?.firstName} ${currentChatUser?.lastName}`}</h6>}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="chat-history">
                                         <ul className="message_data">
-                                            <li className="right clearfix">
-                                                <img className="user_pix" src="../assets/images/xs/avatar7.jpg" alt="avatar" />
-                                                <div className="message">
-                                                    <span>Hi Aiden, how are you?<br /> How is the project coming along?</span>
-                                                </div>
-                                                <span className="data_time">10:12 AM, Today</span>
-                                            </li>
-                                            <li className="left clearfix">
-                                                <img className="user_pix" src="../assets/images/user.png" alt="avatar" />
-                                                <div className="message">
-                                                    <span>Are we meeting today?</span>
-                                                </div>
-                                                <span className="data_time">10:12 AM, Today</span>
-                                            </li>
+                                            {conversation.replies?.map(reply=>renderConversationReply(reply))}
                                         </ul>
                                     </div>
                                     <div className="chat-message clearfix">
                                         <div className="input-group mb-0">
                                             <div className="input-group-prepend">
-                                                <span className="input-group-text">
-                                                    <a href="/" className="btn btn-link"><i className="icon-camera text-warning"></i></a>
-                                                    <a href="/" className="btn btn-link"><i className="icon-camcorder text-warning"></i></a>
-                                                </span>
+                                               <button className="btn btn-warning" onClick={handleSendMessage}>Send</button>
                                             </div>
-                                            <textarea type="text" row="" className="form-control" placeholder="Enter text here..."></textarea>
+                                            <textarea value={msgInput} onChange={e=>setMsgInput(e.target.value)} type="text" row="" className="form-control" placeholder="Enter text here..."></textarea>
                                         </div>
                                     </div>
                                 </div>
-                           
+
                             </div>
                         </div>
                     </div>

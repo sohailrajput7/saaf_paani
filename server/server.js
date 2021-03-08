@@ -14,6 +14,7 @@ const globalErrorMiddleware = require('./middlewares/globalError')
 const authRoutes = require('./routes/AuthRoutes');
 const userRoutes = require('./routes/UserRoutes');
 const supplierRoutes = require('./routes/SupplierRoutes');
+const conversationRoutes = require('./routes/ConversationRoutes')
 const initializeSocketServer = require('./socket');
 
 
@@ -39,6 +40,7 @@ app.use(express.static(`${__dirname}/uploads`))
 app.use('/api/v1/auth',authRoutes)
 app.use('/api/v1/users',userRoutes)
 app.use('/api/v1/suppliers',supplierRoutes)
+app.use('/api/v1/conversations',conversationRoutes)
 
 
 
