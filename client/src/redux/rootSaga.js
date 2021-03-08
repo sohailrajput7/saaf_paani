@@ -4,6 +4,7 @@ import authSagas from './sagas/auth.sagas'
 import userSagas from './sagas/users.sagas'
 import supplierSagas from "./sagas/supplier.sagas";
 import conversationSagas from "./sagas/conversation.sagas";
+import customerSagas from "./sagas/customer.sagas";
 
 
 function* rootSaga(){
@@ -11,7 +12,8 @@ function* rootSaga(){
         fork(authSagas),
         fork(userSagas),
         fork(supplierSagas),
-        fork(conversationSagas)
+        fork(conversationSagas),
+        fork(customerSagas)
     ])
 }
 

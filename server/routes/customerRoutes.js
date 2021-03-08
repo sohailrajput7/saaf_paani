@@ -6,12 +6,7 @@ const {createOne,UpdateOne,deleteCustomer,showAll,showOne} = require('./../contr
 const customerRoutes = express.Router();
 
 
-customerRoutes.route("/add-customer").post(createOne)
-customerRoutes.route("/update-customer").put(UpdateOne)
-customerRoutes.route('/delete-customer').delete(deleteCustomer)
-customerRoutes.route('/show-customers').get(showAll)
-customerRoutes.route('/show-customer').get(showOne)
-
-
+customerRoutes.route("/").post(createOne).get(showAll)
+customerRoutes.route("/:id").get(showOne).patch(UpdateOne).delete(deleteCustomer)
 
 module.exports = customerRoutes;

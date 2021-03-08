@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 import {connectRouter} from 'connected-react-router'
+
 import settingsReducer from './reducers/settings';
 import authReducer from './reducers/auth.reducer'
 import userReducer from "./reducers/users.reducer";
 import supplierInverntoryReducer from "./reducers/supplierInventory.reducer";
 import conversationReducer from "./reducers/conversation.reducer";
 import supplierReducer from "./reducers/supplier.reducer";
+import customerReducer from "./reducers/customer.reducer";
 
 
 export default (history)=>combineReducers({
@@ -15,5 +17,6 @@ export default (history)=>combineReducers({
     inverntory:supplierInverntoryReducer,
     users:userReducer,
     conversation:conversationReducer,
-    supplier:supplierReducer
+    supplier:supplierReducer,
+    customer:customerReducer
 });

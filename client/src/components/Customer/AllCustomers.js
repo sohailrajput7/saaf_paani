@@ -3,11 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {push} from 'connected-react-router'
 import {MDBDataTable, MDBBtnGroup, MDBBtn} from 'mdbreact';
 
-import {getAllSuppliersStart} from '../../redux/actions/supplier.actions'
+import {getAllCustomersStart} from '../../redux/actions/customer.actions'
 import {createConversationStart} from '../../redux/actions/conversation.actions'
-import SupplierTitle from './SupplierTitle'
 
-const supplierDataTable = {
+const customerDataTable = {
     columns:[
         {
             label: 'ID',
@@ -40,40 +39,31 @@ const supplierDataTable = {
             width: 150,
         },
         {
-            label: 'CNIC',
-            field: 'cnic',
-            width: 150,
-        },
-        {
-            label: 'Verified',
-            field: 'verified',
-            width: 80,
-        },
-        {
             label: 'Actions',
             field: 'actions',
             width: 200,
-        },]
+        },
+    ]
 }
 
 
-const Suppliers = () => {
+const AllCustomers = (props) => {
 
     const dispatch = useDispatch();
-    const supplier = useSelector(state=>state.supplier);
+    const customer = useSelector(state=>state.customer);
 
 
 
-    const handleSupplierView = (supplierId)=>{
-        dispatch(push(`/suppliers/${supplierId}`))
+    const handleSupplierView = (customerId)=>{
+        dispatch(push(`/customers/${customerId}`))
     }
 
-    const handleAddToContact = (supplierId)=>{
-        dispatch(createConversationStart({userTwoId:supplierId}))
+    const handleAddToContact = (customerId)=>{
+        dispatch(createConversationStart({userTwoId:customerId}))
     }
 
     const transformSuppliersData = ()=>{
-        supplierDataTable.rows =  supplier.suppliersData?.map(({userId: {_id:user,firstName, lastName, age, email, phoneNo}, cnic, verified,_id}, index) => {
+        customerDataTable.rows =  customer.customersData?.map(({user: {_id:userId,firstName, lastName, age, email, phoneNo}, cnic, verified,_id}, index) => {
             return {
                 id: index + 1,
                 firstName,
@@ -81,30 +71,36 @@ const Suppliers = () => {
                 age,
                 email,
                 phoneNo,
-                cnic,
-                verified: verified ? "Approved" : "Not Approved",
                 actions: <MDBBtnGroup>
-                    <MDBBtn color="warning" size="sm" onClick={()=>handleAddToContact(user)}>Message</MDBBtn>
+                    <MDBBtn color="warning" size="sm" onClick={()=>handleAddToContact(userId)}>Message</MDBBtn>
                     <MDBBtn color="primary" size="sm" onClick={()=>handleSupplierView(_id)}>View</MDBBtn>
                 </MDBBtnGroup>
 
             }
         });
 
-        return supplierDataTable
+        return customerDataTable
     }
 
     console.log("test",transformSuppliersData())
 
     useEffect(()=>{
-        dispatch(getAllSuppliersStart())
+        dispatch(getAllCustomersStart())
     },[])
 
 
 
     return (
         <>
-            <SupplierTitle/>
+            <div className="container-fluid">
+                <div className="block-header">
+                    <div className="row clearfix">
+                        <div className="col-md-6 col-sm-12">
+                            <h1>All Customers</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="row clearfix mx-0">
                 <div className="container-fluid">
                     <div className="row clearfix mx-0">
@@ -120,20 +116,17 @@ const Suppliers = () => {
                                             paging
                                             pagesAmount={15}
                                             data={{...transformSuppliersData()}}
-                                            // searchTop
                                             sortRows={['id']}
-                                            // searchBottom={false}
-                                            // onPageChange={()=>{ activePage: 2, pagesAmount: 5 }}
                                         />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>                   
+                </div>
             </div>
         </>
     );
 }
 
-export default Suppliers
+export default AllCustomers;

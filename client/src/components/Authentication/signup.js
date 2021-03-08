@@ -19,7 +19,6 @@ export default ({}) =>{
 		address:"",
 		password:"",
 		phoneNo:"",
-		age:0,
 	}
 
 	const validationSchema = Yup.object().shape({
@@ -55,7 +54,7 @@ export default ({}) =>{
 				</div>
 				<div className="auth-main particles_js">
 					<div className="auth_div vivify popIn">
-						<div className="auth_brand">
+						<div className="auth_brand mt-4">
 							<Link className="navbar-brand" to="/">
 								<img src="../assets/images/icon.svg" width="30" height="30" className="d-inline-block align-top mr-2" alt="Logo" />
 								Saaf Paani</Link>

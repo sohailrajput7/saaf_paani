@@ -10,6 +10,8 @@ import Chat from './Messenger/chat'
 
 import Suppliers from './Suppliers/Suppliers'
 import AddSupplier from './Suppliers/AddSupplier'
+import AllCustomers from './Customer/AllCustomers';
+import AddCustomer from './Customer/AddCustomer'
 
 const Routes = [
     {
@@ -54,6 +56,13 @@ const Routes = [
         pageTitle: "Tables",
         component: NotFound
     },
+    {
+        path: "/messenger",
+        name: 'messenger',
+        exact: true,
+        pageTitle: "Messenger",
+        component: Chat,
+    },
        {
         path: "/supplierInventory",
         name: 'supplierInventory',
@@ -83,6 +92,28 @@ const Routes = [
         pageTitle: "Suppliers",
         component: (props)=><AddSupplier {...props} isEditing />
     },
-];
+    {
+        path: "/customers/all",
+        name: 'customers',
+        exact: true,
+        pageTitle: "Customers",
+        component: AllCustomers,
+    },
+    {
+        path: "/customers/add",
+        name: 'customers',
+        exact: true,
+        pageTitle: "Customers",
+        component: AddCustomer
+    },
+    {
+        path: "/customers/:id",
+        name: 'customers',
+        exact: true,
+        pageTitle: "Customers",
+        component: (props)=><AddCustomer {...props} isEditing />
+    },
+
+    ];
 
 export default Routes;

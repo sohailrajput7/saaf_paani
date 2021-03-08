@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
 import socket from '../../api/socketio';
@@ -15,6 +15,8 @@ const Messenger = () => {
     const [currentChatUser,setCurrentChatUser] = useState(null);
     const [currentConversationId,setCurrentConversationId] = useState("");
 
+    const messagesInputRef = useRef(null)
+
     useEffect(()=>{
         dispatch(conversationsOfUsersStart())
         socket.emit("chat-connect",{userId:auth.authUser?._id});
@@ -24,6 +26,7 @@ const Messenger = () => {
                     dispatch(addMsgInReplies(newMsgObject))
                 return user;
             })
+            messagesInputRef.current.scrollIntoView({behaviour:"smooth"});
         })
 
         return ()=>{
@@ -52,6 +55,7 @@ const Messenger = () => {
         setMsgInput("");
         socket.emit('private-message',newMsgObj)
         dispatch(addMsgInReplies(newMsgObj));
+        messagesInputRef.current.scrollIntoView({behaviour:"smooth"});
 
     }
 
@@ -100,10 +104,10 @@ const Messenger = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row clearfix">
+                <div className="row clearfix" >
                     <div className="col-lg-12">
                         <div className="card">
-                            <div className="body">
+                            <div className="body" style={{height:"80vh"}}>
                                 <div className="chatapp_list">
                                     <div className="input-group mb-3">
                                         <input type="text" className="form-control" placeholder="Search..." name="search" value={search} onChange={handleSearchChange} />
@@ -120,7 +124,7 @@ const Messenger = () => {
                                     </ul>
                                 </div>
 
-                                <div className="chatapp_body mr-0">
+                                <div className="chatapp_body mr-0 d-flex flex-column" style={{height:"75vh"}}>
                                     <div className="chat-header clearfix">
                                         <div className="row clearfix">
                                             <div className="col-lg-12">
@@ -130,7 +134,7 @@ const Messenger = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="chat-history">
+                                    <div className="chat-history flex-grow-1 overflow-auto" ref={messagesInputRef}>
                                         <ul className="message_data">
                                             {conversation.replies?.map(reply=>renderConversationReply(reply))}
                                         </ul>
