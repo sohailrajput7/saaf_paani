@@ -1,24 +1,23 @@
-import axios from 'axios'
-
+import axios from "axios";
+import config from "../config";
 
 const instance = axios.create({
-    baseURL:"http://localhost:7000/api/v1/",
-})
+  baseURL: config.baseURLAPI,
+});
 
-instance.interceptors.request.use(function(config){
+instance.interceptors.request.use(function (config) {
+  const authToken = localStorage.getItem("auth-token");
+  config.headers["Authorization"] = `Bearer ${authToken}`;
 
-    const authToken = localStorage.getItem("auth-token")
-    config.headers['Authorization'] = `Bearer ${authToken}`
+  return config;
+});
 
-    return config;
-})
-
-instance.interceptors.response.use(function(response){
-    const token = response.data.token;
-    if(token){
-        localStorage.setItem('auth-token',token)
-    }
-    return response
-})
+instance.interceptors.response.use(function (response) {
+  const token = response.data.token;
+  if (token) {
+    localStorage.setItem("auth-token", token);
+  }
+  return response;
+});
 
 export default instance;

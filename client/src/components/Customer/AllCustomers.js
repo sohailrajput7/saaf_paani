@@ -82,8 +82,6 @@ const AllCustomers = (props) => {
         return customerDataTable
     }
 
-    console.log("test",transformSuppliersData())
-
     useEffect(()=>{
         dispatch(getAllCustomersStart())
     },[])

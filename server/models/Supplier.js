@@ -1,27 +1,24 @@
-const Joi = require('joi');
-const mongoose = require('mongoose');
+const Joi = require("joi");
+const mongoose = require("mongoose");
 
 const supplierSchema = new mongoose.Schema({
-  userId:{
-    type:mongoose.Types.ObjectId,
-    ref:"User",
+  userId: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
   },
-  cnic:{
-    type:String,
-    minLength:[13,"CNIC must be 13 characters long"],
-    maxLength:[13,"CNIC must be 13 characters long"]
+  cnic: {
+    type: String,
+    required: [true, "CNIC picture is required"],
   },
   verified: {
-    type:Boolean,
-    default:false,
-  }
+    type: Boolean,
+    default: false,
+  },
 });
 
+const Supplier = mongoose.model("Supplier", supplierSchema);
 
-const Supplier = mongoose.model('Supplier', supplierSchema);
-
-
-module.exports = Supplier
+module.exports = Supplier;
 
 // function validateSupplier(supplier) {
 //   const schema = {

@@ -55,7 +55,7 @@ exports.deleteCustomer = catchAsync (async (req,res,next) => {
     
         const doc = await CustomerModel.findById(req.params.id);
         await UserModel.findByIdAndDelete(doc.user);
-        await CustomerModel.findByIdAndDelete(req.query.id);
+        await CustomerModel.findByIdAndDelete(req.params.id);
         
         res.status(200).json({
             status:'success'

@@ -121,3 +121,7 @@
 .mini_sidebar .mini_sidebar_on .user-account {
     display: none!important;
 }
+
+.hover:hover{
+    cursor:pointer;
+}

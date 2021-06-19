@@ -22,8 +22,10 @@ const Messenger = () => {
         socket.emit("chat-connect",{userId:auth.authUser?._id});
         socket.on('private-message',(newMsgObject)=>{
             setCurrentChatUser(user=>{
-                if(user._id === newMsgObject.senderId)
-                    dispatch(addMsgInReplies(newMsgObject))
+                if(user){
+                    if(user._id === newMsgObject.senderId)
+                        dispatch(addMsgInReplies(newMsgObject))
+                }
                 return user;
             })
             messagesInputRef.current.scrollIntoView({behaviour:"smooth"});
@@ -64,7 +66,7 @@ const Messenger = () => {
         const user = auth.authUser._id === conversation.userOneId._id?conversation.userTwoId:conversation.userOneId;
 
         return (
-            <li key={user._id} className="offline" onClick={()=>{
+            <li key={user._id} className="offline hover" onClick={()=>{
                 setCurrentChatUser(user);
                 setCurrentConversationId(conversation._id);
             }}>

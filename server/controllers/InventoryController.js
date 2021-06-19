@@ -1,69 +1,108 @@
-var InventoryModel = require('./../models/Inventory');
-const catchAsync = require('../utils/catchAsync')
-var AppError = require('./../utils/APIError');
+const InventoryItem = require("../models/InventoryItem");
+const catchAsync = require("../utils/catchAsync");
+const APIError = require("./../utils/APIError");
 
+const uploadInventoryThumbnail = (file) => {
+  const filePath = `inventory/${Date.now()}_${file.name}`;
 
+  file.mv(`${__dirname}/../${process.env.MEDIA_URL}${filePath}`);
 
-exports.createOne = catchAsync(async (req,res,next) => {
+  return filePath;
+};
 
-    const data = req.body;
-    data.Picture = `http://localhost:7000/uploads/${req.file.filename}`; 
+exports.createInventoryItem = catchAsync(async (req, res, next) => {
+  if (!req.files.thumbnail)
+    return next(new APIError("Thumbnail is required", 400));
 
-        const doc = await InventoryModel.create(data); 
-       
-        res.status(200).json({
-            status:'success',
-            doc
-        })
-})
+  const { name, quantity, price, description } = req.body;
 
-exports.UpdateOne = catchAsync(async (req,res,next) => {
-    const doc = await InventoryModel.findByIdAndUpdate(req.query.id,req.body);
+  const checkExistingItem = await InventoryItem.findOne({ name });
 
-    if(!doc){
-        return next(new AppError('Item does not exists', 400))
-    }
+  if (checkExistingItem)
+    return next(
+      new APIError("The item already exists with the same name", 400)
+    );
 
-    updatedDoc = await InventoryModel.findById(req.query.id);
+  const thumbnail = uploadInventoryThumbnail(req.files.thumbnail);
 
-    res.status(200).json({
-        status:'success',
-        updatedDoc
-    })
-    
-})
+  const item = await InventoryItem.create({
+    name,
+    quantity,
+    price,
+    thumbnail,
+    description,
+  });
 
-exports.showAll = catchAsync(async (req,res,next) => {
-    const page = req.query.page * 1 || 1;
-    const limit = 10;
-    const skip = (page - 1) * limit;
-    const doc = await InventoryModel.find().skip(skip).limit(limit);
-    if(doc.length === 0){
-        return next(new AppError('No Items to show',400));
-    }
-    res.status(200).json({
-        status:'success',
-        doc
-    })
-})
+  res.status(200).json({
+    status: "success",
+    data: item,
+  });
+});
 
-exports.deleteCustomer = catchAsync (async (req,res,next) => {
-        const doc = await InventoryModel.findByIdAndDelete(req.query.id);   
-        res.status(200).json({
-            status:'success'
-        })
-})
+exports.getAllInventoryItems = catchAsync(async (req, res, next) => {
+  const items = await InventoryItem.find();
 
-exports.showOne = catchAsync (async (req,res,next) => {
-        const doc = await InventoryModel.findById(req.query.id); 
+  res.status(200).json({
+    status: "success",
+    data: items,
+  });
+});
 
-        if(!doc){
-            return next(new AppError('Item does not exists',400));
-        }
+exports.getInventoryItemById = catchAsync(async (req, res, next) => {
+  const { itemId } = req.params;
 
-        res.status(200).json({
-            status:'success',
-            doc
-        })    
-})
+  const checkExistingItem = await InventoryItem.findById(itemId);
 
+  if (!checkExistingItem)
+    return next(new APIError("No item exists with this id", 400));
+
+  res.status(200).json({
+    status: "success",
+    data: checkExistingItem,
+  });
+});
+
+exports.updateInventroyItem = catchAsync(async (req, res, next) => {
+  const { itemId } = req.params;
+
+  const checkExistingItem = await InventoryItem.findById(itemId);
+
+  if (!checkExistingItem)
+    return next(new APIError("No item exists with this id", 400));
+
+  const { name, quantity, price } = req.body;
+  const updatedItem = {
+    name,
+    quantity,
+    price,
+  };
+
+  if (req.files.thumbnail)
+    updatedItem.thumbnail = uploadInventoryThumbnail(req.files.thumbnail);
+
+  await checkExistingItem.update(updatedItem, {
+    new: true,
+    omitUndefined: true,
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: checkExistingItem,
+  });
+});
+
+exports.deleteInventoryItem = catchAsync(async (req, res, next) => {
+  const { itemId } = req.params;
+
+  const checkExistingItem = await InventoryItem.findById(itemId);
+
+  if (!checkExistingItem)
+    return next(new APIError("No item exists with this id", 400));
+
+  await checkExistingItem.delete();
+
+  res.status(200).json({
+    status: "success",
+    data: checkExistingItem,
+  });
+});

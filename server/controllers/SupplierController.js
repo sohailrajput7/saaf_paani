@@ -1,84 +1,116 @@
-const User = require('../models/User');
-const Supplier = require('../models/Supplier')
-const catchAsync = require('../utils/catchAsync')
-const APIError = require('../utils/APIError')
+const User = require("../models/User");
+const Supplier = require("../models/Supplier");
+const catchAsync = require("../utils/catchAsync");
+const APIError = require("../utils/APIError");
 
+const uploadCNICPicture = (file) => {
+  const filePath = `cnic/${Date.now()}_${file.name}`;
 
-exports.createSupplier = catchAsync(async (req,res,next)=>{
-    const {firstName,lastName,email,password,address,phoneNo,age,cnic} = req.body;
+  file.mv(`${__dirname}/../${process.env.MEDIA_URL}${filePath}`);
 
-    const isUserExists = await User.findOne({email});
+  return filePath;
+};
 
-    if(isUserExists) return next(new APIError("The user with same email already exists",400))
+exports.createSupplier = catchAsync(async (req, res, next) => {
+  if (!req.files.cnic)
+    return next(new APIError("CNIC picture is required", 400));
 
-    const user = await User.create({
-        firstName,lastName,email,password,address,phoneNo,age
-    })
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    address,
+    phoneNo,
+    age,
+    verified,
+  } = req.body;
 
-    const supplier = await Supplier.create({userId:user._id,cnic:cnic})
+  const isUserExists = await User.findOne({ email });
 
-    res.status(200).json({
-        status:"success",
-        data:supplier
-    })
+  if (isUserExists)
+    return next(new APIError("The user with same email already exists", 400));
 
-})
+  const cnic = uploadCNICPicture(req.files.cnic);
 
-exports.getAllSuppliers = catchAsync(async (req,res,next)=>{
-    const suppliers = await Supplier.find().populate('userId');
+  const user = await User.create({
+    firstName,
+    lastName,
+    email,
+    password,
+    address,
+    phoneNo,
+    age,
+  });
 
-    res.status(200).json({
-        status:"success",
-        data:suppliers
-    })
-} )
+  const supplier = await Supplier.create({
+    userId: user._id,
+    cnic,
+    verified: verified === "true",
+  });
 
-exports.getSupplierById = catchAsync(async(req,res,next)=>{
-    const supplier = await Supplier.findById(req.params.id);
+  res.status(200).json({
+    status: "success",
+    data: supplier,
+  });
+});
 
-    if(!supplier)
-        return next(new APIError("No Supplier exists with this id",400))
+exports.getAllSuppliers = catchAsync(async (req, res, next) => {
+  const suppliers = await Supplier.find().populate("userId");
 
-    res.status(200).json({
-        status:"success",
-        data:supplier
-    })
-})
+  res.status(200).json({
+    status: "success",
+    data: suppliers,
+  });
+});
 
-exports.deleteSupplierById = catchAsync(async(req,res,next)=>{
-    const supplier = await Supplier.findById(req.params.id);
+exports.getSupplierById = catchAsync(async (req, res, next) => {
+  const supplier = await Supplier.findById(req.params.id);
 
-    if(!supplier)
-        return next(new APIError("No Supplier exists with this id",400))
+  if (!supplier)
+    return next(new APIError("No Supplier exists with this id", 400));
 
-    await User.findByIdAndDelete(supplier.userId);
+  res.status(200).json({
+    status: "success",
+    data: supplier,
+  });
+});
 
-    await supplier.delete();
+exports.deleteSupplierById = catchAsync(async (req, res, next) => {
+  const supplier = await Supplier.findById(req.params.id);
 
-    res.status(200).json({
-        status:"success",
-        data:supplier
-    })
+  if (!supplier)
+    return next(new APIError("No Supplier exists with this id", 400));
 
-})
+  await User.findByIdAndDelete(supplier.userId);
 
-exports.updateSupplierById = catchAsync(async(req,res,next)=>{
-    const supplier = await Supplier.findById(req.params.id);
-    delete req.body['_id']
+  await supplier.delete();
 
-    if(!supplier)
-        return next(new APIError("No Supplier exists with this id",400))
+  res.status(200).json({
+    status: "success",
+    data: supplier,
+  });
+});
 
-    await User.findByIdAndUpdate(supplier.userId,req.body,{new:true,runValidators:true});
+exports.updateSupplierById = catchAsync(async (req, res, next) => {
+  const supplier = await Supplier.findById(req.params.id);
+  delete req.body["_id"];
 
-    supplier.cnic = req.body.cnic ?? supplier.cnic;
-    supplier.verified = req.body.verified ?? supplier.verified;
+  if (!supplier)
+    return next(new APIError("No Supplier exists with this id", 400));
 
-    await supplier.save()
+  await User.findByIdAndUpdate(supplier.userId, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-    res.status(200).json({
-        status:"success",
-        data:supplier
-    })
+  supplier.cnic = req.body.cnic ?? supplier.cnic;
+  supplier.verified = req.body.verified ?? supplier.verified;
 
-})
+  await supplier.save();
+
+  res.status(200).json({
+    status: "success",
+    data: supplier,
+  });
+});
