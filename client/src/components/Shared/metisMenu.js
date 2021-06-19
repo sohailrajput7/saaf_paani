@@ -70,6 +70,7 @@ const metisMenu = [
       },
     ],
   },
+
   {
     id: 8,
     icon: "dollar",

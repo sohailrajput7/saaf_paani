@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { push } from "connected-react-router";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
@@ -62,8 +61,6 @@ const AddSupplier = (props) => {
   const toggleModal = () => {
     setIsModal(!isModal);
   };
-
-  console.log("test", values);
 
   useEffect(() => {
     if (props.isEditing) {

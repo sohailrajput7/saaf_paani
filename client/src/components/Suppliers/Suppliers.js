@@ -4,6 +4,7 @@ import { push } from "connected-react-router";
 import { MDBDataTable, MDBBtnGroup, MDBBtn } from "mdbreact";
 
 import { getAllSuppliersStart } from "../../redux/actions/supplier.actions";
+import { setSupplierId } from "../../redux/actions/cart.actions";
 import { createConversationStart } from "../../redux/actions/conversation.actions";
 import SupplierTitle from "./SupplierTitle";
 import config from "../../config";
@@ -110,6 +111,16 @@ const Suppliers = () => {
                 onClick={() => handleSupplierView(_id)}
               >
                 View
+              </MDBBtn>
+              <MDBBtn
+                color="success"
+                size="sm"
+                onClick={() => {
+                  dispatch(setSupplierId(_id));
+                  dispatch(push("/shop"));
+                }}
+              >
+                Shop
               </MDBBtn>
             </MDBBtnGroup>
           ),

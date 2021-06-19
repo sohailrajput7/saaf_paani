@@ -23,6 +23,7 @@ const InventoryItem = (props) => {
   const initialValues = {
     name: "",
     quantity: "",
+    purchasedPrice: "",
     price: "",
     thumbnail: "",
     description: "",
@@ -31,6 +32,7 @@ const InventoryItem = (props) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required().label("Name"),
     quantity: Yup.string().required().label("Quantity"),
+    purchasedPrice: Yup.number().required().label("Purchased Price"),
     price: Yup.number().required().label("Price"),
     thumbnail: Yup.string().required().label("Thumbnail"),
     description: Yup.string().required().label("Description"),
@@ -54,10 +56,11 @@ const InventoryItem = (props) => {
 
   useEffect(() => {
     if (props.isEditing) {
-      const { name, quantity, price, description, thumbnail } =
+      const { name, quantity, purchasedPrice, price, description, thumbnail } =
         inventory.items?.find((item) => item._id === params.id);
       setValues({
         name,
+        purchasedPrice,
         price,
         quantity,
         description,
@@ -122,7 +125,7 @@ const InventoryItem = (props) => {
               <div className="body">
                 <form id="basic-form" onSubmit={handleSubmit}>
                   <div className="row clearfix">
-                    <div className="col-lg-12 col-md-12">
+                    <div className="col-lg-6 col-md-6">
                       <div className="form-group">
                         <label>Name</label>
                         <input
@@ -160,6 +163,26 @@ const InventoryItem = (props) => {
                           {errors.quantity}
                         </div>
                       )}
+                    </div>
+
+                    <div className="col-lg-6 col-md-6">
+                      <div className="form-group">
+                        <label>Purchased Price</label>
+                        <input
+                          type="number"
+                          placeholder="Purchased Price *"
+                          className="form-control"
+                          required
+                          name="purchasedPrice"
+                          value={values.purchasedPrice}
+                          onChange={handleChange}
+                        />
+                        {errors.purchasedPrice && touched.purchasedPrice && (
+                          <div className="text-danger text-left mt-1 ml-2">
+                            {errors.purchasedPrice}
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <div className="col-lg-6 col-md-12">
                       <div className="form-group">

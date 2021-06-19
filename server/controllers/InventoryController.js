@@ -14,7 +14,7 @@ exports.createInventoryItem = catchAsync(async (req, res, next) => {
   if (!req.files.thumbnail)
     return next(new APIError("Thumbnail is required", 400));
 
-  const { name, quantity, price, description } = req.body;
+  const { name, quantity, purchasedPrice, price, description } = req.body;
 
   const checkExistingItem = await InventoryItem.findOne({ name });
 
@@ -31,6 +31,7 @@ exports.createInventoryItem = catchAsync(async (req, res, next) => {
     price,
     thumbnail,
     description,
+    purchasedPrice,
   });
 
   res.status(200).json({
@@ -70,14 +71,15 @@ exports.updateInventroyItem = catchAsync(async (req, res, next) => {
   if (!checkExistingItem)
     return next(new APIError("No item exists with this id", 400));
 
-  const { name, quantity, price } = req.body;
+  const { name, quantity, price, purchasedPrice } = req.body;
   const updatedItem = {
     name,
     quantity,
     price,
+    purchasedPrice,
   };
 
-  if (req.files.thumbnail)
+  if (req.files?.thumbnail)
     updatedItem.thumbnail = uploadInventoryThumbnail(req.files.thumbnail);
 
   await checkExistingItem.update(updatedItem, {

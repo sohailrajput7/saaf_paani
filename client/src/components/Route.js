@@ -13,6 +13,8 @@ import AllCustomers from "./Customer/AllCustomers";
 import AddCustomer from "./Customer/AddCustomer";
 import AllInventoryItems from "./Inventory/AllInventoryItems";
 import AddInventoryItem from "./Inventory/AddInventoryItem";
+import Shop from "./Shop/Shop";
+import Checkout from "./Shop/Checkout";
 
 const Routes = [
   {
@@ -65,6 +67,20 @@ const Routes = [
     component: Chat,
   },
 
+  {
+    path: "/shop",
+    name: "shop",
+    exact: true,
+    pageTitle: "Shop",
+    component: Shop,
+  },
+  {
+    path: "/shop/checkout",
+    name: "shop",
+    exact: true,
+    pageTitle: "Shop",
+    component: Checkout,
+  },
   {
     path: "/suppliers/all",
     name: "suppliers",

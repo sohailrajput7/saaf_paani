@@ -6,6 +6,7 @@ import supplierSagas from "./sagas/supplier.sagas";
 import conversationSagas from "./sagas/conversation.sagas";
 import customerSagas from "./sagas/customer.sagas";
 import ivnentorySagas from "./sagas/inventory.sagas";
+import cartSagas from "./sagas/cart.sagas";
 
 function* rootSaga() {
   yield all([
@@ -15,6 +16,7 @@ function* rootSaga() {
     fork(conversationSagas),
     fork(customerSagas),
     fork(ivnentorySagas),
+    fork(cartSagas),
   ]);
 }
 

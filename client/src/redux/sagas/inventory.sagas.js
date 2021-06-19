@@ -4,9 +4,17 @@ import * as actions from "../actions/inventory.actions";
 import { all, fork, put, takeLatest } from "redux-saga/effects";
 import { push } from "connected-react-router";
 
-function getFormData({ name, quantity, description, price, thumbnail }) {
+function getFormData({
+  name,
+  quantity,
+  description,
+  purchasedPrice,
+  price,
+  thumbnail,
+}) {
   const form = new FormData();
   form.append("name", name);
+  form.append("purchasedPrice", purchasedPrice);
   form.append("price", price);
   form.append("quantity", quantity);
   form.append("description", description);
