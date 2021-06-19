@@ -15,7 +15,10 @@ import Logout from "./components/Logout/logout";
 import { BrowserRouter as Router, Switch, Route,Redirect } from 'react-router-dom';
 
 import { authUserStart } from "./redux/actions/auth.actions";
-
+import MainScreen from './components/Website/MainScreen';
+import AboutUs from './components/Website/AboutUs';
+import ContectUs from './components/Website/ContectUs';
+import Home from './components/Website/Home';
 class App extends Component {
 
 	componentDidMount(){
@@ -32,6 +35,7 @@ class App extends Component {
 				}}
 			>
 					<Switch>
+						<Route path="/" component={MainScreen} />
 						<Route path="/signup" component={SignUp} />
 						<Route path="/login" component={Login} />
 						<Route path="/forgotpassword" component={ForgotPassword} />
@@ -40,7 +44,7 @@ class App extends Component {
 						<Route path="/supplierInventory" component={SupplierInventory} />
 						<Route path="/logout" component={Logout}/>
 						<Route component={Layout} />
-						<Redirect to="/login" />
+						<Redirect to="/" />					
 					</Switch>
 			</div>
 		);
