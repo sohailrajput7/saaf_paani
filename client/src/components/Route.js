@@ -16,6 +16,7 @@ import AddInventoryItem from "./Inventory/AddInventoryItem";
 import Shop from "./Shop/Shop";
 import Checkout from "./Shop/Checkout";
 import Sales from "./Sales/AllSales";
+import MyProfile from "./Profile/Profile";
 
 const Routes = [
   {
@@ -52,6 +53,13 @@ const Routes = [
     exact: true,
     pageTitle: "Maintenance",
     component: Maintenance,
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    exact: true,
+    pageTitle: "Profile",
+    component: MyProfile,
   },
   {
     path: "/notfound",
