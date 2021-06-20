@@ -9,7 +9,9 @@ import {
 const Checkout = (props) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+
   const [isModal, setIsModal] = useState(false);
+  const [paidAmount, setPaidAmount] = useState(0);
 
   const toggleModal = () => setIsModal(!isModal);
 
@@ -91,7 +93,6 @@ const Checkout = (props) => {
       <div
         className={`modal fade  ${isModal ? "d-block show" : ""}`}
         id="exampleModal"
-        onClick={toggleModal}
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
@@ -110,8 +111,27 @@ const Checkout = (props) => {
             </div>
             <div className="modal-body">
               <p>
-                Are you sure you want to checkout?There is no going back from
-                this.
+                <div className="form-group">
+                  <label>Paid Amount (Rs)</label>
+                  <input
+                    type="text"
+                    className="form-control round"
+                    name="paidAmount"
+                    onChange={(e) => setPaidAmount(e.target.value)}
+                    placeholder="Enter Paid Amount"
+                    value={paidAmount}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Return Amount (Rs)</label>
+                  <input
+                    type="text"
+                    className="form-control round"
+                    name="returnAmount"
+                    placeholder="Enter Paid Amount"
+                    value={paidAmount > 0 && paidAmount - calculateTotalPrice()}
+                  />
+                </div>
               </p>
             </div>
             <div className="modal-footer">

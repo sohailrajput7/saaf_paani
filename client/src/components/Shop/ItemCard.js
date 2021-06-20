@@ -8,7 +8,7 @@ const ItemCard = ({ item, onItemAdd }) => {
         <div className="body text-center ">
           <div className="circle">
             <img
-              className="rounded-circle"
+              className="rounded-circle h-100"
               src={config.baseURL + item.thumbnail}
             />
           </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ItemCard from "./ItemCard";
 
@@ -10,6 +10,8 @@ const Shop = (props) => {
   const dispatch = useDispatch();
   const inventory = useSelector((state) => state.inventory);
   const cart = useSelector((state) => state.cart);
+
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     dispatch(getAllInventoryItemsStart());
@@ -34,13 +36,27 @@ const Shop = (props) => {
               <p className="mr-1">{cart.totalItems}</p>
               <i class="fa fa-shopping-cart fa-3x"></i>
             </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control round"
+                  name="search"
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search Item Here"
+                  value={search}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div className="row mx-0">
-        {inventory.items?.map((item) => (
-          <ItemCard item={item} onItemAdd={handleItemAddToCart} />
-        ))}
+        {inventory.items
+          ?.filter((item) => item.name.toLowerCase().includes(search))
+          .map((item) => (
+            <ItemCard item={item} onItemAdd={handleItemAddToCart} />
+          ))}
       </div>
     </div>
   );

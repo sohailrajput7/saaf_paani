@@ -15,6 +15,7 @@ import AllInventoryItems from "./Inventory/AllInventoryItems";
 import AddInventoryItem from "./Inventory/AddInventoryItem";
 import Shop from "./Shop/Shop";
 import Checkout from "./Shop/Checkout";
+import Sales from "./Sales/AllSales";
 
 const Routes = [
   {
@@ -73,6 +74,13 @@ const Routes = [
     exact: true,
     pageTitle: "Shop",
     component: Shop,
+  },
+  {
+    path: "/sales",
+    name: "sales",
+    exact: true,
+    pageTitle: "Sales",
+    component: Sales,
   },
   {
     path: "/shop/checkout",

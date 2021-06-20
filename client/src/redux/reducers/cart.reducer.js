@@ -40,6 +40,16 @@ const cartReducer = produce((draft, action) => {
 
     case actions.SET_SUPPLIER_ID:
       draft.supplierId = action.payload;
+
+    case actions.CHECKOUT_START:
+      draft.isLoading = false;
+      break;
+
+    case actions.CHECKOUT_SUCCESS:
+      draft.items = [];
+      draft.totalItems = 0;
+      draft.supplierId = null;
+      break;
   }
 }, initialState);
 

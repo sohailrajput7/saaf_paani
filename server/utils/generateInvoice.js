@@ -26,6 +26,7 @@ const getInvoiceHTML = (data) => {
         width: 21cm;  
         height: 29.7cm; 
         margin: 0 auto; 
+        padding:20px;
         color: #001028;
         background: #FFFFFF; 
         font-family: Arial, sans-serif; 
@@ -156,7 +157,7 @@ const getInvoiceHTML = (data) => {
       <h1>Supplier Order Invoice</h1>
       <div id="company" class="clearfix">
         <div>Saaf Paani</div>
-        <div>UET Lahore<br /> AZ 85004, US</div>
+        <div>UET Lahore<br /> AZ 85004, PK</div>
         <div>(921) 123-6882</div>
         <div><a href="mailto:company@saafpaani.com">company@saafpaani.com</a></div>
       </div>
@@ -174,7 +175,7 @@ const getInvoiceHTML = (data) => {
       <table>
         <thead>
           <tr>
-            <th class="service">ID</th>
+            <th class="service">ITEM ID</th>
             <th class="desc">NAME</th>
             <th>PRICE</th>
             <th>QUANTITY</th>
@@ -218,10 +219,10 @@ module.exports = async (data) => {
 
     await page.setContent(invoiceHTML);
 
-    const pdfPath = `uploads/invoices/${Date.now()}_${data.supplier._id}.pdf`;
+    const pdfPath = `invoices/${Date.now()}_${data.supplier._id}.pdf`;
 
     await page.pdf({
-      path: `${__dirname}/../${pdfPath}`,
+      path: `${__dirname}/../uploads/${pdfPath}`,
       format: "a4",
       printBackground: true,
     });

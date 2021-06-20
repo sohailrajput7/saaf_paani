@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import DonutChart from "../common/dashboard11/donutChart";
 import SalesChart from "../common/dashboard11/salesChart";
 
+import { getDashboardStatsStart } from "../../redux/actions/analytics.actions";
+
 const Dashboard11 = () => {
+  const dispatch = useDispatch();
+  const dashboard = useSelector((state) => state.analytics.dashboard);
+
+  useEffect(() => {
+    dispatch(getDashboardStatsStart());
+  }, []);
+
   return (
     <>
       <div className="container-fluid">
@@ -25,7 +35,9 @@ const Dashboard11 = () => {
                   </div>
                   <div className="ml-4">
                     <span>Total Sales</span>
-                    <h4 className="mb-0 font-weight-medium">87,805 Rs.</h4>
+                    <h4 className="mb-0 font-weight-medium">
+                      {dashboard.totalSales} Rs.
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -40,7 +52,9 @@ const Dashboard11 = () => {
                   </div>
                   <div className="ml-4">
                     <span>Total Profit</span>
-                    <h4 className="mb-0 font-weight-medium">53,651 Rs.</h4>
+                    <h4 className="mb-0 font-weight-medium">
+                      {dashboard.totalProfit} Rs.
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -55,7 +69,9 @@ const Dashboard11 = () => {
                   </div>
                   <div className="ml-4">
                     <span>Total Suppliers</span>
-                    <h4 className="mb-0 font-weight-medium">4</h4>
+                    <h4 className="mb-0 font-weight-medium">
+                      {dashboard.suppliers}
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -70,7 +86,9 @@ const Dashboard11 = () => {
                   </div>
                   <div className="ml-4">
                     <span>Total Customers</span>
-                    <h4 className="mb-0 font-weight-medium">2</h4>
+                    <h4 className="mb-0 font-weight-medium">
+                      {dashboard.customers}
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -86,18 +104,10 @@ const Dashboard11 = () => {
               </div>
               <div className="body text-center">
                 <div id="Order_status" style={{ height: "268px" }}>
-                  <DonutChart />
-                </div>
-                <hr />
-                <div className="row clearfix">
-                  <div className="col-6">
-                    <h6 className="mb-0">3,095 Rs.</h6>
-                    <small className="text-muted">Last Month</small>
-                  </div>
-                  <div className="col-6">
-                    <h6 className="mb-0">2,763 Rs.</h6>
-                    <small className="text-muted">This Month</small>
-                  </div>
+                  <DonutChart
+                    firstValue={dashboard.totalProfit || 0}
+                    secondValue={dashboard.totalSales || 0}
+                  />
                 </div>
               </div>
             </div>

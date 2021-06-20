@@ -99,6 +99,16 @@ const Suppliers = () => {
           actions: (
             <MDBBtnGroup>
               <MDBBtn
+                color="success"
+                size="sm"
+                onClick={() => {
+                  dispatch(setSupplierId(_id));
+                  dispatch(push("/shop"));
+                }}
+              >
+                Shop
+              </MDBBtn>
+              <MDBBtn
                 color="warning"
                 size="sm"
                 onClick={() => handleAddToContact(user)}
@@ -111,16 +121,6 @@ const Suppliers = () => {
                 onClick={() => handleSupplierView(_id)}
               >
                 View
-              </MDBBtn>
-              <MDBBtn
-                color="success"
-                size="sm"
-                onClick={() => {
-                  dispatch(setSupplierId(_id));
-                  dispatch(push("/shop"));
-                }}
-              >
-                Shop
               </MDBBtn>
             </MDBBtnGroup>
           ),

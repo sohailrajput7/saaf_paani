@@ -20,6 +20,7 @@ const supplierRoutes = require("./routes/SupplierRoutes");
 const conversationRoutes = require("./routes/ConversationRoutes");
 const initializeSocketServer = require("./socket");
 const paymentsRoutes = require("./routes/PaymentsRoutes");
+const analyticsRoutes = require("./routes/AnalyticsRoutes");
 
 db();
 initializePassport();
@@ -45,6 +46,7 @@ app.use("/api/v1/inventory", inventoryRoutes);
 app.use("/api/v1/suppliers", supplierRoutes);
 app.use("/api/v1/conversations", conversationRoutes);
 app.use("/api/v1/payments", paymentsRoutes);
+app.use("/api/v1/analytics", analyticsRoutes);
 
 app.use(globalErrorMiddleware);
 

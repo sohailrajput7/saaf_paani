@@ -135,19 +135,11 @@ class Menu extends Component {
                   >
                     <strong>{`${this.props.auth.authUser?.firstName} ${this.props.auth.authUser?.lastName}`}</strong>
                   </Dropdown.Toggle>
-
                   <Dropdown.Menu>
-                    <Link className="dropdown-item" to="/page-profile">
+                    <Link className="dropdown-item" to="/profile">
                       <i className="icon-user"></i>My Profile
                     </Link>
-                    <Link className="dropdown-item" to="/app-inbox">
-                      <i className="icon-envelope-open"></i>Messages
-                    </Link>
-                    <Link className="dropdown-item" to="/">
-                      <i className="icon-settings"></i>Settings
-                    </Link>
-                    <li className="divider" />
-                    <Link className="dropdown-item" to="/login">
+                    <Link className="dropdown-item" to="/logout">
                       <i className="icon-power"></i>Logout
                     </Link>
                   </Dropdown.Menu>

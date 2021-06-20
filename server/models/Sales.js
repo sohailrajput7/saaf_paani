@@ -16,7 +16,7 @@ const salesSchema = new mongoose.Schema({
       quantity: Number,
     },
   ],
-  invoiceURL: {
+  invoice: {
     type: String,
     required: [true, "Invoice is required"],
   },

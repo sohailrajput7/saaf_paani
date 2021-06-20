@@ -1,4 +1,4 @@
-import { all, put, call, fork } from "redux-saga/effects";
+import { all, fork } from "redux-saga/effects";
 
 import authSagas from "./sagas/auth.sagas";
 import userSagas from "./sagas/users.sagas";
@@ -7,6 +7,8 @@ import conversationSagas from "./sagas/conversation.sagas";
 import customerSagas from "./sagas/customer.sagas";
 import ivnentorySagas from "./sagas/inventory.sagas";
 import cartSagas from "./sagas/cart.sagas";
+import salesSagas from "./sagas/sales.sagas";
+import analyticsSagas from "./sagas/analytics.sagas";
 
 function* rootSaga() {
   yield all([
@@ -17,6 +19,8 @@ function* rootSaga() {
     fork(customerSagas),
     fork(ivnentorySagas),
     fork(cartSagas),
+    fork(salesSagas),
+    fork(analyticsSagas),
   ]);
 }
 

@@ -20,9 +20,9 @@ const decreaseItemQuantity = (itemsPayload, items) => {
 };
 
 const createNewSale = async (items, supplierId, invoiceURL) => {
-  const salesItems = items.map(({ name, quantity, price, _id }) => {
+  const salesItems = items.map(({ name, quantity, price, id }) => {
     return {
-      itemId: _id,
+      itemId: id,
       name,
       quantity,
       price,
@@ -45,6 +45,8 @@ exports.checkoutSupplier = catchAsync(async (req, res, next) => {
 
   const session = await mongoose.startSession();
 
+  let sales = {};
+
   session.withTransaction(async () => {
     const inventoryItems = await InventoryItems.find({
       _id: {
@@ -62,10 +64,9 @@ exports.checkoutSupplier = catchAsync(async (req, res, next) => {
       totalPrice: calculateTotalPrice(req.body.items),
     });
 
-    await createNewSale(
+    sales = await createNewSale(
       req.body.items,
       req.body.supplierId,
-      invoice,
       invoiceURL
     );
   });
@@ -79,8 +80,12 @@ exports.checkoutSupplier = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllSupplierSales = catchAsync(async (req, res, next) => {
-  const sales = await Sales.find();
-
+  const sales = await Sales.find().populate({
+    path: "supplierId",
+    populate: {
+      path: "userId",
+    },
+  });
   res.status(200).json({
     status: "success",
     data: sales,

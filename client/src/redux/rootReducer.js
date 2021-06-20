@@ -9,6 +9,8 @@ import supplierReducer from "./reducers/supplier.reducer";
 import customerReducer from "./reducers/customer.reducer";
 import inventoryReducer from "./reducers/inventory.reducer";
 import cartReducer from "./reducers/cart.reducer";
+import salesReducer from "./reducers/sales.reducers";
+import analyticsReducer from "./reducers/analytics.reducer";
 
 export default (history) =>
   combineReducers({
@@ -21,4 +23,6 @@ export default (history) =>
     supplier: supplierReducer,
     customer: customerReducer,
     cart: cartReducer,
+    sales: salesReducer,
+    analytics: analyticsReducer,
   });
