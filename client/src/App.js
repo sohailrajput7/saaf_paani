@@ -18,8 +18,15 @@ import {
 } from "react-router-dom";
 
 import { authUserStart } from "./redux/actions/auth.actions";
-
+import MainScreen from "./components/Website/MainScreen";
+import AboutUs from "./components/Website/AboutUs";
+import ContectUs from "./components/Website/ContectUs";
+import Home from "./components/Website/Home";
 class App extends Component {
+  componentDidMount() {
+    this.props.authUserStart();
+  }
+
   componentDidMount() {
     this.props.authUserStart();
   }
@@ -49,14 +56,16 @@ class App extends Component {
         }}
       >
         <Switch>
+          <Route path="/" component={MainScreen} />
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
           <Route path="/forgotpassword" component={ForgotPassword} />
           <Route path="/notfound" component={NotFound} />
           <Route path="/maintenance" component={Maintenance} />
+          <Route path="/supplierInventory" component={SupplierInventory} />
           <Route path="/logout" component={Logout} />
           <Route component={Layout} />
-          <Redirect to="/login" />
+          <Redirect to="/" />
         </Switch>
       </div>
     );

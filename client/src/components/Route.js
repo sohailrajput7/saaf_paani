@@ -11,12 +11,10 @@ import Suppliers from "./Suppliers/Suppliers";
 import AddSupplier from "./Suppliers/AddSupplier";
 import AllCustomers from "./Customer/AllCustomers";
 import AddCustomer from "./Customer/AddCustomer";
-import AllInventoryItems from "./Inventory/AllInventoryItems";
-import AddInventoryItem from "./Inventory/AddInventoryItem";
-import Shop from "./Shop/Shop";
-import Checkout from "./Shop/Checkout";
-import Sales from "./Sales/AllSales";
-import MyProfile from "./Profile/Profile";
+import MainScreen from "./Website/MainScreen";
+import Home from "./Website/Home";
+import AboutUs from "./Website/AboutUs";
+import ContactUs from "./Website/ContectUs";
 
 const Routes = [
   {
@@ -25,6 +23,27 @@ const Routes = [
     exact: true,
     pageTitle: "Dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/",
+    name: "website",
+    exact: true,
+    pageTitle: "Website",
+    component: Home,
+  },
+  {
+    path: "/aboutUs",
+    name: "website",
+    exact: true,
+    pageTitle: "Website",
+    component: AboutUs,
+  },
+  {
+    path: "/contectUs",
+    name: "website",
+    exact: true,
+    pageTitle: "Website",
+    component: ContactUs,
   },
   {
     path: "/login",
@@ -55,13 +74,6 @@ const Routes = [
     component: Maintenance,
   },
   {
-    path: "/profile",
-    name: "profile",
-    exact: true,
-    pageTitle: "Profile",
-    component: MyProfile,
-  },
-  {
     path: "/notfound",
     name: "notfound",
     exact: true,
@@ -74,6 +86,20 @@ const Routes = [
     exact: true,
     pageTitle: "Messenger",
     component: Chat,
+  },
+  {
+    path: "/supplierInventory",
+    name: "supplierInventory",
+    exact: true,
+    pageTitle: "Inventory",
+    component: SupplierInventory,
+  },
+  {
+    path: "/suppliers/all",
+    name: "suppliers",
+    exact: true,
+    pageTitle: "Suppliers",
+    component: Suppliers,
   },
 
   {
