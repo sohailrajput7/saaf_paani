@@ -12,6 +12,10 @@ import Suppliers from './Suppliers/Suppliers'
 import AddSupplier from './Suppliers/AddSupplier'
 import AllCustomers from './Customer/AllCustomers';
 import AddCustomer from './Customer/AddCustomer'
+import MainScreen from './Website/MainScreen';
+import Home from './Website/Home';
+import AboutUs from './Website/AboutUs';
+import ContactUs from './Website/ContectUs';
 
 const Routes = [
     {
@@ -20,6 +24,27 @@ const Routes = [
         exact: true,
         pageTitle: "Dashboard",
         component: Dashboard
+    },
+    {
+        path: "/",
+        name: 'website',
+        exact: true,
+        pageTitle: "Website",
+        component: Home
+    },
+    {
+        path: "/aboutUs",
+        name: 'website',
+        exact: true,
+        pageTitle: "Website",
+        component: AboutUs
+    },
+    {
+        path: "/contectUs",
+        name: 'website',
+        exact: true,
+        pageTitle: "Website",
+        component: ContactUs
     },
     {
         path: "/login",
