@@ -36,6 +36,16 @@ const createNewSale = async (items, supplierId, invoiceURL) => {
   });
 };
 
+const changeSupplierInventory = (supplierInventory, items) => {
+  items.forEach((item) => {
+    const itemFound = supplierInventory.find((i) => item.id === item._id);
+    if (itemFound) itemFound += item.quantity;
+    else itemFound = item.quantity;
+  });
+
+  return supplierInventory;
+};
+
 exports.checkoutSupplier = catchAsync(async (req, res, next) => {
   const supplier = await Supplier.findById(req.body.supplierId).populate(
     "userId"
@@ -57,6 +67,18 @@ exports.checkoutSupplier = catchAsync(async (req, res, next) => {
     await Promise.all([
       ...decreaseItemQuantity(req.body.items, inventoryItems),
     ]);
+
+    const supplier = await Supplier.findById(req.body.supplierId);
+
+    if (!supplier)
+      return next(new APIError("No supplier found with this ID", 400));
+
+    const updatedInventory = await changeSupplierInventory(
+      supplier.inventory,
+      req.body.items
+    );
+    supplier.inventory = updatedInventory;
+    await supplier.save();
 
     const invoiceURL = await generateSupplierInvoice({
       supplier: supplier.userId,

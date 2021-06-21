@@ -14,23 +14,19 @@ const supplierSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  inventory: [
+    {
+      itemId: {
+        type: mongoose.Types.ObjectId,
+        ref: "InventoryItem",
+      },
+      price: Number,
+      quantity: Number,
+      salePrice: Number,
+    },
+  ],
 });
 
 const Supplier = mongoose.model("Supplier", supplierSchema);
 
 module.exports = Supplier;
-
-// function validateSupplier(supplier) {
-//   const schema = {
-//     firstName: Joi.string().min(5).max(50).required(),
-//     lastName: Joi.string().min(5).max(50).required(),
-//     email: Joi.string().min(5).max(255).required().email(),
-//     password: Joi.string().min(5).max(1024).required(),
-//     phoneNo: Joi.Number().min(11).max(13).required(),
-//     age: Joi.Number().min(2).max(2).required(),
-//     address: Joi.string().min(10).max(255).required(),
-//   };
-//
-//   return Joi.validate(supplier, schema);
-// }
-// exports.validate = validateSupplier;

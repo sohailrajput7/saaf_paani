@@ -11,10 +11,14 @@ import Suppliers from "./Suppliers/Suppliers";
 import AddSupplier from "./Suppliers/AddSupplier";
 import AllCustomers from "./Customer/AllCustomers";
 import AddCustomer from "./Customer/AddCustomer";
-import MainScreen from "./Website/MainScreen";
 import Home from "./Website/Home";
 import AboutUs from "./Website/AboutUs";
 import ContactUs from "./Website/ContectUs";
+import AddInventoryItem from "./Inventory/AddInventoryItem";
+import AllInventoryItems from "./Inventory/AllInventoryItems";
+import Shop from "./Shop/Shop";
+import Checkout from "./Shop/Checkout";
+import AllSales from "./Sales/AllSales";
 
 const Routes = [
   {
@@ -87,13 +91,7 @@ const Routes = [
     pageTitle: "Messenger",
     component: Chat,
   },
-  {
-    path: "/supplierInventory",
-    name: "supplierInventory",
-    exact: true,
-    pageTitle: "Inventory",
-    component: SupplierInventory,
-  },
+
   {
     path: "/suppliers/all",
     name: "suppliers",
@@ -114,7 +112,7 @@ const Routes = [
     name: "sales",
     exact: true,
     pageTitle: "Sales",
-    component: Sales,
+    component: AllSales,
   },
   {
     path: "/shop/checkout",
