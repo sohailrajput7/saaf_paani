@@ -36,7 +36,7 @@ function* getAuthUserAsync(){
         yield put(push('/dashboard'))
 
     } catch (error) {
-        yield put(push('/login'))
+        yield put(push('/'))
     }
 }
 

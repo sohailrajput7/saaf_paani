@@ -15,9 +15,8 @@ import Logout from "./components/Logout/logout";
 import { BrowserRouter as Router, Switch, Route,Redirect } from 'react-router-dom';
 
 import { authUserStart } from "./redux/actions/auth.actions";
-import MainScreen from './components/Website/MainScreen';
 import AboutUs from './components/Website/AboutUs';
-import ContectUs from './components/Website/ContectUs';
+import ContectUs from './components/Website/ContectUs'
 import Home from './components/Website/Home';
 class App extends Component {
 
@@ -27,7 +26,7 @@ class App extends Component {
 
 	render() {
 		const { themeColor, fontStyle, lightVersion, RtlVersion, offcanvas, miniSidebar, horizontalMenu, miniHover } = this.props
-		document.getElementsByTagName('body')[0].className = `${themeColor} ${fontStyle}${lightVersion ? ' light_version' : ''}${RtlVersion ? ' rtl' : ''}${offcanvas ? ' offcanvas-active' : ''}${horizontalMenu ? ' h-menu' : ''}${miniSidebar ? ' mini_sidebar' : ''}${miniHover ? ' mini_hover' : ''}`;
+		document.getElementsByTagName('body')[0].className = `${themeColor} ${fontStyle}${lightVersion ? 'light_version' : ''}${RtlVersion ? ' rtl' : ''}${offcanvas ? ' offcanvas-active' : ''}${horizontalMenu ? ' h-menu' : ''}${miniSidebar ? ' mini_sidebar' : ''}${miniHover ? ' mini_hover' : ''}`;
 		return (
 			<div
 				ref={leftSidebar => {
@@ -35,16 +34,18 @@ class App extends Component {
 				}}
 			>
 					<Switch>
-						<Route path="/" component={MainScreen} />
+						<Route exact path="/" component={Home} />
+						<Route exact path="/contectUs" component={ContectUs} />
+						<Route exact path="/aboutUs" component={AboutUs} />
 						<Route path="/signup" component={SignUp} />
-						<Route path="/login" component={Login} />
+						<Route exact path="/login" component={Login} />
 						<Route path="/forgotpassword" component={ForgotPassword} />
 						<Route path="/notfound" component={NotFound} />
 						<Route path="/maintenance" component={Maintenance} />
 						<Route path="/supplierInventory" component={SupplierInventory} />
 						<Route path="/logout" component={Logout}/>
 						<Route component={Layout} />
-						<Redirect to="/" />					
+						<Redirect exact to="/" />					
 					</Switch>
 			</div>
 		);

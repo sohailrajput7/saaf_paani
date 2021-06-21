@@ -1,8 +1,8 @@
 import React from 'react';
-
+import MainScreen from './MainScreen';
 const AboutUs=()=> {
   return (
-    <>
+    <MainScreen>
     <div className=" bg-dark p-20 m-t-20">
      <h2 className="mt-3 col-12  text-center">About Us</h2>
     <div className="row clearfix col-12 mx-auto p-10 m-t-20">
@@ -56,7 +56,7 @@ const AboutUs=()=> {
         </div>
       </div>
     </div>
-    </>
+    </MainScreen>
   );
 }
 

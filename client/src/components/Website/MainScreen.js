@@ -1,12 +1,6 @@
 import React,{useState} from 'react';
-import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css"
-import "../../../node_modules/bootstrap/dist/js/bootstrap.bundle"
-import {Switch,Route, Redirect} from 'react-router-dom';
-import AboutUs from './AboutUs'
-import ContectUs from './ContectUs'
 import Navbar from './Navbar'
 import {createGlobalStyle,ThemeProvider} from 'styled-components'
-import Home from './Home';
 import Footer from './Footer'; 
 
 const GlobalStyle=createGlobalStyle`
@@ -16,20 +10,14 @@ body{
 }
 `;
 
-
-const MainScreen=()=> {
+const MainScreen=(props)=> {
   const[theme,setTheme]=useState({mode:'dark'})
   return (
     <ThemeProvider theme={theme}>
       <>
         <GlobalStyle />
         <Navbar />
-        <Switch>
-						<Route exact path="/" component={Home} />
-
-						<Route exact path="/contectUs" component={ContectUs} />
-						<Route exact path="/aboutUs" component={AboutUs} />			
-				</Switch>
+        {props.children}
         <Footer />
       </>
     </ThemeProvider>

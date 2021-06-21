@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
-
-const ContactUs=()=> {
+import MainScreen from './MainScreen'
+const ContectUs=()=> {
     const[data,setData]=useState({
 
        fullname:'',
@@ -21,6 +21,7 @@ const ContactUs=()=> {
         alert(`form submit : ${data.phone}`)
     }
   return (
+    <MainScreen>
       <div className="margin">
       <div className="my-5">
       <h1 className="text-center">Contact US</h1>
@@ -51,8 +52,8 @@ const ContactUs=()=> {
       </div>
       </div>
       </div>
-   
+   </MainScreen>
   );
 }
 
-export default ContactUs;
+export default ContectUs;
