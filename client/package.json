@@ -18,7 +18,7 @@
     "history": "4.10.1",
     "immer": "^8.0.1",
     "jquery": "^3.5.0",
-    "mdbreact": "^4.6.1",
+    "mdbreact": "^5.0.2",
     "multiselect-react-dropdown": "^1.5.7",
     "react": "^16.13.1",
     "react-albus": "^2.0.0",

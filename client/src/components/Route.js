@@ -1,7 +1,5 @@
 import React from "react";
-import Login from "./Authentication/login";
-import Signup from "./Authentication/signup";
-import ForgotPassword from "./Authentication/forgotpassword";
+
 import NotFound from "./Authentication/404";
 import Maintenance from "./Authentication/maintenance";
 import Dashboard from "./Dashboard/dashboard11";
@@ -11,14 +9,14 @@ import Suppliers from "./Suppliers/Suppliers";
 import AddSupplier from "./Suppliers/AddSupplier";
 import AllCustomers from "./Customer/AllCustomers";
 import AddCustomer from "./Customer/AddCustomer";
-import Home from "./Website/Home";
-import AboutUs from "./Website/AboutUs";
-import ContactUs from "./Website/ContectUs";
 import AddInventoryItem from "./Inventory/AddInventoryItem";
 import AllInventoryItems from "./Inventory/AllInventoryItems";
 import Shop from "./Shop/Shop";
 import Checkout from "./Shop/Checkout";
 import AllSales from "./Sales/AllSales";
+import Profile from "./Profile/Profile";
+import Stash from "./Stash/Stash";
+import StashItem from "./Stash/StashItem";
 
 const Routes = [
   {
@@ -27,48 +25,6 @@ const Routes = [
     exact: true,
     pageTitle: "Dashboard",
     component: Dashboard,
-  },
-  {
-    path: "/",
-    name: "website",
-    exact: true,
-    pageTitle: "Website",
-    component: Home,
-  },
-  {
-    path: "/aboutUs",
-    name: "website",
-    exact: true,
-    pageTitle: "Website",
-    component: AboutUs,
-  },
-  {
-    path: "/contectUs",
-    name: "website",
-    exact: true,
-    pageTitle: "Website",
-    component: ContactUs,
-  },
-  {
-    path: "/login",
-    name: "login",
-    exact: true,
-    pageTitle: "Tables",
-    component: Login,
-  },
-  {
-    path: "/signup",
-    name: "signup",
-    exact: true,
-    pageTitle: "Tables",
-    component: Signup,
-  },
-  {
-    path: "/forgotpassword",
-    name: "forgotpassword",
-    exact: true,
-    pageTitle: "Tables",
-    component: ForgotPassword,
   },
   {
     path: "/maintenance",
@@ -91,15 +47,6 @@ const Routes = [
     pageTitle: "Messenger",
     component: Chat,
   },
-
-  {
-    path: "/suppliers/all",
-    name: "suppliers",
-    exact: true,
-    pageTitle: "Suppliers",
-    component: Suppliers,
-  },
-
   {
     path: "/shop",
     name: "shop",
@@ -115,6 +62,27 @@ const Routes = [
     component: AllSales,
   },
   {
+    path: "/stash",
+    name: "stash",
+    exact: true,
+    pageTitle: "Stash",
+    component: Stash,
+  },
+  {
+    path: "/stash/:id",
+    name: "stash",
+    exact: true,
+    pageTitle: "Stash Item",
+    component: StashItem,
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    exact: true,
+    pageTitle: "Profile",
+    component: Profile,
+  },
+  {
     path: "/shop/checkout",
     name: "shop",
     exact: true,
@@ -128,7 +96,7 @@ const Routes = [
     pageTitle: "Suppliers",
     component: Suppliers,
   },
-  ,
+
   {
     path: "/suppliers/add",
     name: "suppliers",

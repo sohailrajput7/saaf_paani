@@ -75,7 +75,7 @@ const AllSales = (props) => {
             <div className="col-lg-12">
               <div className="card">
                 <div className="body">
-                  <div className="table-responsive">
+                  <div>
                     <MDBDataTable
                       noBottomColumns
                       className="table table-hover js-basic-example dataTable table-custom spacing5"

@@ -1,7 +1,9 @@
+const mongoose = require("mongoose");
 const User = require("../models/User");
 const Supplier = require("../models/Supplier");
 const catchAsync = require("../utils/catchAsync");
 const APIError = require("../utils/APIError");
+const Roles = require("../constants/Roles");
 
 const uploadCNICPicture = (file) => {
   const filePath = `cnic/${Date.now()}_${file.name}`;
@@ -11,10 +13,14 @@ const uploadCNICPicture = (file) => {
   return filePath;
 };
 
+const milesToRadian = function (miles) {
+  var earthRadiusInMiles = 3963.2;
+  return miles / earthRadiusInMiles;
+};
+
 exports.createSupplier = catchAsync(async (req, res, next) => {
   if (!req.files.cnic)
     return next(new APIError("CNIC picture is required", 400));
-
   const {
     firstName,
     lastName,
@@ -24,6 +30,7 @@ exports.createSupplier = catchAsync(async (req, res, next) => {
     phoneNo,
     age,
     verified,
+    location,
   } = req.body;
 
   const isUserExists = await User.findOne({ email });
@@ -32,27 +39,36 @@ exports.createSupplier = catchAsync(async (req, res, next) => {
     return next(new APIError("The user with same email already exists", 400));
 
   const cnic = uploadCNICPicture(req.files.cnic);
+  const loc = JSON.parse(location);
 
-  const user = await User.create({
-    firstName,
-    lastName,
-    email,
-    password,
-    address,
-    phoneNo,
-    age,
+  const session = await mongoose.startSession();
+
+  await session.withTransaction(async () => {
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password,
+      address,
+      phoneNo,
+      age,
+      role: Roles.SUPPLIER,
+      location: { type: "Point", coordinates: [loc.long, loc.latt] },
+    });
+
+    const supplier = await Supplier.create({
+      userId: user._id,
+      cnic,
+      verified: verified === "true",
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: supplier,
+    });
   });
 
-  const supplier = await Supplier.create({
-    userId: user._id,
-    cnic,
-    verified: verified === "true",
-  });
-
-  res.status(200).json({
-    status: "success",
-    data: supplier,
-  });
+  session.endSession();
 });
 
 exports.getAllSuppliers = catchAsync(async (req, res, next) => {
@@ -112,5 +128,42 @@ exports.updateSupplierById = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: supplier,
+  });
+});
+
+exports.getSupplierInventory = catchAsync(async (req, res, next) => {
+  const supplier = await Supplier.findById(req.params.userId).populate(
+    "inventory.itemId"
+  );
+
+  if (!supplier)
+    return next(new APIError("No supplier found with this id", 400));
+
+  res.status(200).json({
+    status: "success",
+    data: supplier.inventory,
+  });
+});
+
+exports.getSuppliersByRadius = catchAsync(async (req, res, next) => {
+  const { latt, long } = req.query;
+  const radius = req.params.radius;
+  const coords = [parseFloat(long), parseFloat(latt)];
+  const radisuInRadian = milesToRadian(radius);
+  console.log(radisuInRadian);
+
+  const suppliers = await Supplier.find({})
+    .populate("inventory.itemId")
+    .populate("userId", null, {
+      location: {
+        $geoWithin: {
+          $centerSphere: [coords, radisuInRadian],
+        },
+      },
+    });
+
+  res.status(200).json({
+    status: "success",
+    data: suppliers.filter((u) => u.userId !== null),
   });
 });

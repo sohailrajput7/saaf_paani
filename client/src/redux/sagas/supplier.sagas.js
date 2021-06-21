@@ -14,6 +14,7 @@ function getNewSupplierFormData({
   phoneNo,
   age,
   cnic,
+  location: coordinates,
 }) {
   const form = new FormData();
   form.append("firstName", firstName);
@@ -25,6 +26,7 @@ function getNewSupplierFormData({
   form.append("age", age);
   form.append("cnic", cnic);
   form.append("verified", verified);
+  form.append("location", JSON.stringify(coordinates));
 
   return form;
 }
@@ -74,6 +76,29 @@ function* deleteSupplierAsync(action) {
   }
 }
 
+function* getSupplierInventoryAsync(action) {
+  try {
+    const response = yield axios.get(
+      `suppliers/inventory/${action.payload.userId}`
+    );
+    yield put(actions.getSupplierInventoryItemsSuccess(response.data.data));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* getAllNearBySuppliersAsync(action) {
+  const { latt, long, radius } = action.payload;
+  try {
+    const response = yield axios.get(
+      `suppliers/near/${radius}?latt=${latt}&long=${long}`
+    );
+    yield put(actions.getAllNearBySuppliersSuccess(response.data.data));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* watchDeleteSupplier() {
   yield takeLatest(actionTypes.DELETE_SUPPLIER_START, deleteSupplierAsync);
 }
@@ -86,8 +111,23 @@ function* watchGetAllSuppliers() {
   yield takeLatest(actionTypes.GET_ALL_SUPPLIERS_START, getAllSuppliersAsync);
 }
 
+function* watchGetAllNearBYSuppliers() {
+  yield throttle(
+    2000,
+    actionTypes.GET_ALL_NEARBY_SUPPLIERS_START,
+    getAllNearBySuppliersAsync
+  );
+}
+
 function* watchCreateSupplier() {
   yield takeLatest(actionTypes.CREATE_SUPPLIER_START, createSupplierAsync);
+}
+
+function* watchGetSupplierInventory() {
+  yield takeLatest(
+    actionTypes.GET_SUPPLIER_INVENTORY_ITEMS_START,
+    getSupplierInventoryAsync
+  );
 }
 
 function* supplierSagas() {
@@ -96,6 +136,8 @@ function* supplierSagas() {
     fork(watchGetAllSuppliers),
     fork(watchUpdateSupplier),
     fork(watchDeleteSupplier),
+    fork(watchGetSupplierInventory),
+    fork(watchGetAllNearBYSuppliers),
   ]);
 }
 

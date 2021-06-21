@@ -112,17 +112,6 @@ const Dashboard11 = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-9 col-md-9">
-            <div className="card">
-              <div className="header">
-                <h2>Sales Reports</h2>
-              </div>
-              <div className="body">
-                <small className="text-muted">Sales Throughout Year</small>
-                <SalesChart />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </>

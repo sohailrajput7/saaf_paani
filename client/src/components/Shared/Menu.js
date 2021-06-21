@@ -77,9 +77,10 @@ class Menu extends Component {
       }
     });
   }
-  handleListItem = (listItem) => {};
 
   render() {
+    const authUser = this.props.auth.authUser;
+
     if (document.getElementById("left-sidebar") && this.props.miniSidebar) {
       document
         .getElementById("left-sidebar")
@@ -116,40 +117,45 @@ class Menu extends Component {
             </button>
           </div>
           <div className="sidebar-scroll">
-            <div className="user-account d-flex ">
-              <div className="user_div">
-                <img
-                  src={this.props.auth.authUser?.profilePicture}
-                  className="user-photo"
-                  alt="User Profile"
-                />
+            <div className="d-flex flex-column">
+              <div className="user-account d-flex ">
+                <div className="user_div">
+                  <img
+                    src={this.props.auth.authUser?.profilePicture}
+                    className="user-photo"
+                    alt="User Profile"
+                  />
+                </div>
+                <div className="dropdown">
+                  <span>Welcome,</span>
+                  <br />
+                  <Dropdown className="ml-0">
+                    <Dropdown.Toggle
+                      variant="success"
+                      id="dropdown-basic"
+                      className="user-name left_dropdown_btn"
+                    >
+                      <strong>{`${authUser?.firstName} ${authUser?.lastName}`}</strong>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Link className="dropdown-item" to="/profile">
+                        <i className="icon-user"></i>My Profile
+                      </Link>
+                      <Link className="dropdown-item" to="/logout">
+                        <i className="icon-power"></i>Logout
+                      </Link>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <ul className="dropdown-menu dropdown-menu-right account vivify flipInY"></ul>
+                </div>
               </div>
-              <div className="dropdown">
-                <span>Welcome,</span>
-                <br />
-                <Dropdown className="ml-0">
-                  <Dropdown.Toggle
-                    variant="success"
-                    id="dropdown-basic"
-                    className="user-name left_dropdown_btn"
-                  >
-                    <strong>{`${this.props.auth.authUser?.firstName} ${this.props.auth.authUser?.lastName}`}</strong>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Link className="dropdown-item" to="/profile">
-                      <i className="icon-user"></i>My Profile
-                    </Link>
-                    <Link className="dropdown-item" to="/logout">
-                      <i className="icon-power"></i>Logout
-                    </Link>
-                  </Dropdown.Menu>
-                </Dropdown>
-                <ul className="dropdown-menu dropdown-menu-right account vivify flipInY"></ul>
-              </div>
+              <p className="pl-2">User Role : {authUser?.role}</p>
             </div>
             <nav id="left-sidebar-nav" className="sidebar-nav">
               <MetisMenu
-                content={metisMenu}
+                content={metisMenu.filter(
+                  (item) => item.role === authUser?.role || !item.role
+                )}
                 noBuiltInClassNames={true}
                 classNameItemActive="active"
                 classNameContainer={(e) => this.toggleSubMenu(e)}

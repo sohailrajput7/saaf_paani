@@ -1,3 +1,5 @@
+import Roles from "../../constants/Roles";
+
 const metisMenu = [
   {
     id: "main",
@@ -8,6 +10,7 @@ const metisMenu = [
     icon: "home",
     label: "Dashboard",
     to: "/dashboard",
+    role: Roles.ADMIN,
   },
 
   {
@@ -15,6 +18,7 @@ const metisMenu = [
     icon: "users",
     label: "Customers",
     to: "/customers",
+    role: Roles.ADMIN,
     content: [
       {
         id: 3,
@@ -35,6 +39,7 @@ const metisMenu = [
     icon: "user-plus",
     label: "Suppliers",
     to: "/suppliers",
+    role: Roles.ADMIN,
     content: [
       {
         id: 6,
@@ -55,6 +60,7 @@ const metisMenu = [
     icon: "archive",
     label: "Inventory",
     to: "/inventory",
+    role: Roles.ADMIN,
     content: [
       {
         id: 11,
@@ -70,12 +76,19 @@ const metisMenu = [
       },
     ],
   },
-
+  {
+    id: 13,
+    icon: "archive",
+    label: "Stash",
+    to: "/stash",
+    role: Roles.SUPPLIER,
+  },
   {
     id: 8,
     icon: "dollar",
     label: "Sales",
     to: "/sales",
+    role: Roles.ADMIN,
   },
   {
     id: 9,

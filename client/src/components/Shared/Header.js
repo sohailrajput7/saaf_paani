@@ -43,7 +43,6 @@ const Header = ({
     // background: "#e91e63",
     width: scrolled,
   };
-  console.log(scrolled, "nbnvhffhfgh");
   return (
     <>
       <nav className="navbar top-navbar">

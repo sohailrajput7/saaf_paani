@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
+import useGeoLocation from "../../hooks/useGeoLocation";
 
 import {
   createSupplierStart,
@@ -16,6 +17,8 @@ const AddSupplier = (props) => {
   const dispatch = useDispatch();
   const supplier = useSelector((state) => state.supplier);
   const params = useParams();
+
+  const location = useGeoLocation();
 
   const initialValues = {
     firstName: "",
@@ -35,13 +38,16 @@ const AddSupplier = (props) => {
     password: Yup.string().required().label("Password"),
     address: Yup.string().required().label("Address"),
     phoneNo: Yup.string().required().label("Phone No"),
-    age: Yup.number().required().label("Age"),
+    age: Yup.number()
+      .min(18, "Age must be at least 18")
+      .max(60, "Age can not be greater than 60")
+      .label("Age"),
     cnic: Yup.string().required().label("CNIC"),
     verified: Yup.string().required(),
   });
 
   const handleFormSubmit = (values) => {
-    dispatch(createSupplierStart(values));
+    dispatch(createSupplierStart({ ...values, location }));
   };
 
   const {
@@ -78,7 +84,7 @@ const AddSupplier = (props) => {
         cnic,
         address,
         password: "",
-        verified,
+        verified: verified ? "true" : "false",
       });
     }
   }, []);

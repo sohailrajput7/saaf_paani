@@ -28,7 +28,7 @@ export default class Layout extends Component {
                     exact={layout.exact}
                     path={layout.path}
                     component={layout.component}
-                  ></Route>
+                  />
                 );
               })}
             </Switch>

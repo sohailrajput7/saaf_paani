@@ -146,7 +146,7 @@ const Suppliers = () => {
             <div className="col-lg-12">
               <div className="card">
                 <div className="body">
-                  <div className="table-responsive">
+                  <div>
                     <MDBDataTable
                       noBottomColumns
                       className="table table-hover js-basic-example dataTable table-custom spacing5"
@@ -155,10 +155,7 @@ const Suppliers = () => {
                       paging
                       pagesAmount={15}
                       data={{ ...transformSuppliersData() }}
-                      // searchTop
                       sortRows={["id"]}
-                      // searchBottom={false}
-                      // onPageChange={()=>{ activePage: 2, pagesAmount: 5 }}
                     />
                   </div>
                 </div>

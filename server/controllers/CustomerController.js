@@ -1,78 +1,65 @@
-const CustomerModel = require('./../models/Customer');
-const UserModel = require('./../models/User');
-const catchAsync = require('../utils/catchAsync')
-const APIError = require('./../utils/APIError');
+const CustomerModel = require("./../models/Customer");
+const UserModel = require("./../models/User");
+const catchAsync = require("../utils/catchAsync");
+const APIError = require("./../utils/APIError");
 
+exports.createOne = catchAsync(async (req, res, next) => {
+  const user = await UserModel.create(req.body);
+  const userDoc = { user: user };
+  const doc = await CustomerModel.create(userDoc);
 
+  res.status(200).json({
+    status: "success",
+    data: doc,
+  });
+});
 
-exports.createOne = catchAsync(async (req,res,next) => {
-        const user = await UserModel.create(req.body);
-        const userDoc = {"user": user};
-        const doc = await CustomerModel.create(userDoc);
+exports.UpdateOne = catchAsync(async (req, res, next) => {
+  delete req.body["_id"];
 
-       
-        res.status(200).json({
-            status:'success',
-            data:doc
-        })
-})
+  const doc = await CustomerModel.findById(req.params.id);
+  const userDoc = await UserModel.findByIdAndUpdate(doc.user, req.body);
 
-exports.UpdateOne = catchAsync(async (req,res,next) => {
+  if (!doc) {
+    return next(new APIError("Customer does not exists", 400));
+  }
 
-    delete req.body['_id'];
+  updatedDoc = await CustomerModel.findById(req.query.id).populate("user");
 
-     const doc = await CustomerModel.findById(req.params.id);
-     const userDoc = await UserModel.findByIdAndUpdate(doc.user,req.body);
+  res.status(200).json({
+    status: "success",
+    data: doc,
+  });
+});
 
-    if(!doc){
-        return next(new APIError('Customer does not exists', 400))
-    }
+exports.showAll = catchAsync(async (req, res, next) => {
+  const doc = await CustomerModel.find().populate("user");
 
-    updatedDoc = await CustomerModel.findById(req.query.id).populate('user');
+  res.status(200).json({
+    status: "success",
+    data: doc,
+  });
+});
 
-    res.status(200).json({
-        status:'success',
-        data:doc,
-    })
-    
-})
+exports.deleteCustomer = catchAsync(async (req, res, next) => {
+  const doc = await CustomerModel.findById(req.params.id);
+  await UserModel.findByIdAndDelete(doc.user);
+  await CustomerModel.findByIdAndDelete(req.params.id);
 
-exports.showAll = catchAsync(async (req,res,next) => {
-    const page = req.query.page * 1 || 1;
-    const limit = 10;
-    const skip = (page - 1) * limit;
-    const doc = await CustomerModel.find().skip(skip).limit(limit).populate('user');
-    if(doc.length === 0){
-        return next(new APIError('No Customers to show',400));
-    }
-    res.status(200).json({
-        status:'success',
-        data:doc,
-    })
-})
+  res.status(200).json({
+    status: "success",
+  });
+});
 
-exports.deleteCustomer = catchAsync (async (req,res,next) => {
-    
-        const doc = await CustomerModel.findById(req.params.id);
-        await UserModel.findByIdAndDelete(doc.user);
-        await CustomerModel.findByIdAndDelete(req.params.id);
-        
-        res.status(200).json({
-            status:'success'
-        })
-})
+exports.showOne = catchAsync(async (req, res, next) => {
+  const doc = await CustomerModel.findById(req.params.id).populate("user");
 
-exports.showOne = catchAsync (async (req,res,next) => {
+  if (!doc) {
+    return next(new APIError("Customer does not exists", 400));
+  }
 
-        const doc = await CustomerModel.findById(req.params.id).populate('user');
-
-        if(!doc){
-            return next(new APIError('Customer does not exists',400));
-        }
-
-        res.status(200).json({
-            status:'success',
-            data:doc
-        })    
-})
-
+  res.status(200).json({
+    status: "success",
+    data: doc,
+  });
+});

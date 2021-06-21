@@ -56,9 +56,9 @@ exports.getDashboardAnalytics = catchAsync(async (req, res, next) => {
     data: {
       suppliers: suppliersCount,
       customers: customersCount,
-      totalSales: sales[0].totalSalesAmount,
-      totalPurchasedAmount: sales[0].totalPurchasedAmount,
-      totalProfit: sales[0].totalSalesAmount - sales[0].totalPurchasedAmount,
+      totalSales: sales[0]?.totalSalesAmount,
+      totalPurchasedAmount: sales[0]?.totalPurchasedAmount,
+      totalProfit: sales[0]?.totalSalesAmount - sales[0]?.totalPurchasedAmount,
     },
   });
 });

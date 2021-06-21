@@ -129,7 +129,9 @@ const Checkout = (props) => {
                     className="form-control round"
                     name="returnAmount"
                     placeholder="Enter Paid Amount"
-                    value={paidAmount > 0 && paidAmount - calculateTotalPrice()}
+                    value={
+                      paidAmount > 0 ? paidAmount - calculateTotalPrice() : 0
+                    }
                   />
                 </div>
               </p>
@@ -147,6 +149,7 @@ const Checkout = (props) => {
                 type="button"
                 className="btn btn-round btn-primary"
                 onClick={handleCheckout}
+                disabled={paidAmount <= calculateTotalPrice()}
               >
                 Confirm
               </button>
