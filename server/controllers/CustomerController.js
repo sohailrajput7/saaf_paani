@@ -4,7 +4,10 @@ const catchAsync = require("../utils/catchAsync");
 const APIError = require("./../utils/APIError");
 
 exports.createOne = catchAsync(async (req, res, next) => {
-  const user = await UserModel.create(req.body);
+  const user = await UserModel.create({...req.body,
+  
+    location: { type: "Point", coordinates: [req.body.location.long, req.body.location.latt] }
+  });
   const userDoc = { user: user };
   const doc = await CustomerModel.create(userDoc);
 

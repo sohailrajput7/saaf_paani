@@ -27,6 +27,7 @@ exports.createAdmin = catchAsync(async (req, res, next) => {
     age: 20,
     role: Roles.ADMIN,
     password: "admin1234",
+    location:{type:"Point",coordinates:[0,0]}
   });
 
   res.status(200).json({

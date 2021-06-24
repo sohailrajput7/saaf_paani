@@ -51,14 +51,16 @@ exports.getDashboardAnalytics = catchAsync(async (req, res, next) => {
     },
   ]);
 
+  const profit = (sales[0]?.totalSalesAmount - sales[0]?.totalPurchasedAmount);
+
   res.status(200).json({
     status: "success",
     data: {
       suppliers: suppliersCount,
       customers: customersCount,
-      totalSales: sales[0]?.totalSalesAmount,
-      totalPurchasedAmount: sales[0]?.totalPurchasedAmount,
-      totalProfit: sales[0]?.totalSalesAmount - sales[0]?.totalPurchasedAmount,
+      totalSales: sales[0]?.totalSalesAmount ?? 0,
+      totalPurchasedAmount: sales[0]?.totalPurchasedAmount ?? 0,
+      totalProfit: profit?profit:0,
     },
   });
 });

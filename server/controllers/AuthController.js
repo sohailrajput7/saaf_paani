@@ -66,7 +66,10 @@ exports.loginUser = catchAsync(async (req, res, next) => {
   if (user.role === Roles.SUPPLIER) {
     const supplier = await Supplier.findOne({ userId: user._id })
       .populate("inventory.itemId")
-      .select("-userId");
+      .select("-userId -_id");
+    
+      if(!supplier) return next(new APIError("The supplier doesnot exists with this id",400))
+
     response = {
       ...response,
       ...supplier._doc,

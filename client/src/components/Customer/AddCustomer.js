@@ -4,6 +4,7 @@ import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
+import useGeoLocation from "../../hooks/useGeoLocation";
 
 import {
   createCustomerStart,
@@ -17,6 +18,8 @@ const AddCustomer = (props) => {
   const dispatch = useDispatch();
   const customer = useSelector((state) => state.customer);
   const params = useParams();
+
+  const location = useGeoLocation();
 
   const initialValues = {
     firstName: "",
@@ -34,11 +37,14 @@ const AddCustomer = (props) => {
     password: Yup.string().required().label("Password"),
     address: Yup.string().required().label("Address"),
     phoneNo: Yup.string().required().label("Phone No"),
-    age: Yup.number().required().label("Age"),
+    age: Yup.number()
+      .min(18, "Age must be at least 18")
+      .max(60, "Age can not be greater than 60")
+      .label("Age"),
   });
 
   const handleFormSubmit = (values) => {
-    dispatch(createCustomerStart(values));
+    dispatch(createCustomerStart({ ...values, location }));
   };
 
   const { values, errors, touched, handleChange, handleSubmit, setValues } =

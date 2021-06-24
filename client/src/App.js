@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { io } from "socket.io-client";
 
 import "./App.css";
 import Layout from "./components/Shared/Layout";
@@ -26,10 +25,6 @@ import Order from "./components/Order/Order";
 import MainScreen from "./components/Website/MainScreen";
 import SupplierInventory from "./components/Order/SupplierInventory";
 class App extends Component {
-  componentDidMount() {
-    this.props.authUserStart();
-  }
-
   componentDidMount() {
     this.props.authUserStart();
   }

@@ -245,13 +245,13 @@ const AddSupplier = (props) => {
                             {values.cnic ? values.cnic.name : "Choose file *"}
                           </label>
                         </div>
-                        {errors.cnic && touched.cnic && (
-                          <div className="text-danger text-left mt-1 ml-2">
-                            {errors.cnic}
-                          </div>
-                        )}
                       </div>
                     </div>
+                    {errors.cnic && touched.cnic && (
+                      <div className="text-danger text-left mt-1 ml-2">
+                        {errors.cnic}
+                      </div>
+                    )}
                   </div>
                   <div className="row clearfix">
                     <div className="col-md-12">
